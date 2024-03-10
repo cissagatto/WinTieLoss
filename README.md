@@ -11,7 +11,7 @@ To calculate the win-tie-loss, a CSV file in the following format is required.
 | .......   |          |          |            |          |
 | dataset D |          |          |            |          |
  
-Place it in the CSVs folder, or pass the path where your CSV is saved to the function.
+Place it in the CSVs folder, or pass the path where your CSV is saved.
 
 Call compute.win.tie.loss(data, measure.type) to compute
 
