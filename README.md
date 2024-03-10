@@ -15,7 +15,7 @@ Place it in the CSVs folder, or pass the path where your CSV is saved.
 
 Call compute.win.tie.loss(data, measure.type) to compute
 
-Measury type must be:
+Measure type must be:
 - 1: if the best value for the measure is 1.0 (as precision, for example)
 - 0: if the best value for the measure is 0.0 (as hamming loss, for example)
 
