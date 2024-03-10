@@ -19,4 +19,18 @@ Measure type must be:
 - 1: if the best value for the measure is 1.0 (as precision, for example)
 - 0: if the best value for the measure is 0.0 (as hamming loss, for example)
 
-Call plot.win.tie.loss(data, names.methods, name.file, width, height, bottom, left, top, right, size.font, wtl) to plot
+Call plot.win.tie.loss(data, names.methods, name.file, width, height, bottom, left, top, right, size.font, wtl) to plot, where
+- data: dataframe from csv file
+- names.methods: the method's names that you are comparing (example : c("method1", "method2", "method3))
+- name.file: the full path where you want your file to be save (example: name.file = "~/Plots/measure1.pdf")
+- width: pdf width value
+- height: pdf height value
+- bottom: par margin bottom value
+- left: par margin left value
+- top: par margin top value
+- right: par margin right value
+- size.font: par font size value
+- wtl: a vector like c("win", "tie", loss") in your language or just use in English like this one.
+
+
+  
