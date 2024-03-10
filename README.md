@@ -5,6 +5,7 @@ See the RUN.R file to check how the code works.
 To calculate the win-tie-loss, a CSV file in the following format is required.
 
 | datasets  | method 1 | method 2 | method ... | method M |
+| --------- | -------- | -------- | ---------- | -------- |
 | dataset 1 |          |          |            |          |
 | dataset 1 |          |          |            |          |
 | .......   |          |          |            |          |
