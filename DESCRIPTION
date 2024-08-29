@@ -1,0 +1,10 @@
+Package: WinTieLoss
+Type: Package
+Title: A package for multi-label win-tie-loss computation
+Version: 0.1.0
+Author: Elaine Cecília Gatto
+Description: Compute the total wind, tie, and loss
+License: GPL-3
+Maintainer: Prof. Elaine Cecilia Gatto <elainececiliagattto@gmail.com>
+Encoding: UTF-8
+RoxygenNote: 7.3.2

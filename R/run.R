@@ -18,30 +18,72 @@
 # http://ppgcc.dc.ufscar.br - Bioinformatics and Machine Learning Group      #
 # BIOMAL - http://www.biomal.ufscar.br                                       #
 #                                                                            #
-# Katholieke Universiteit Leuven Campus Kulak Kortrijk Belgium               #
-# Medicine Department - https://kulak.kuleuven.be/                           #
-# https://kulak.kuleuven.be/nl/over_kulak/faculteiten/geneeskunde            #
-#                                                                            #
 ##############################################################################
 
-rm(list=ls())
+# rm(list=ls())
 
-FolderRoot = "~/Analise-HPMLD"
-FolderScripts = "~/Analise-HPMLD/R"
-FolderData = "~/Analise-HPMLD/Data-2"
-FolderWTL = "~/Analise-HPMLD/WTL"
+FolderRoot = "~/WinTieLoss"
+FolderScripts = "~/WinTieLoss/R"
+FolderData = "~/WinTieLoss/Data"
+FolderResults = "~/WinTieLoss/Results"
+
 
 setwd(FolderScripts)
+source("libraries.R")
+source("utils.R")
 source("win-tie-loss.R")
 
-# random.dataframe()
 
+
+##############################
+# para um unico arquivo
+##############################
+name.file = "~/WinTieLoss/Data/clp.csv"
+data = data.frame(read.csv(name.file))
+data = data[,-1]
+methods.names = colnames(data)
+
+df_res.mes <- measures()
+filtered_res.mes <- filter(df_res.mes, names == "clp")
+measure.type = as.numeric(filtered_res.mes$type)
+
+
+res = win.tie.loss.compute(data = data, measure.type)
+res$method <- factor(res$method, levels = methods.names)
+res <- res[order(res$method), ]
+
+save = paste(FolderResults, "/clp.csv", sep="")
+write.csv(res, save, row.names = FALSE)
+
+wtl = c("win", "tie", "loss")
+colnames(res) = wtl 
+
+save = paste(FolderResults, "/clp.pdf", sep="")
+win.tie.loss.plot(data = res, 
+                  names.methods = methods.names, 
+                  name.file = save, 
+                  width = 18, 
+                  height = 10, 
+                  bottom = 2, 
+                  left = 11, 
+                  top = 0, 
+                  right = 1, 
+                  size.font = 2.0,
+                  wtl = wtl)
+
+
+
+
+##############################
+# para vários arquivos
+##############################
 setwd(FolderData)
 current_dir <- getwd()
 files <- list.files(full.names = TRUE) 
+file_names <- tools::file_path_sans_ext(basename(files))
 full_paths <- sapply(files, function(file) normalizePath(file))
-methods.names = c("method1", "method2", "method3", "method4", "method5")
-measure.type = 1
+
+
 
 # calcula o número de win-tie-loss para todos os arquivos na pasta
 # plota o gráfico para todos os arquivos na pasta
@@ -52,21 +94,21 @@ while(i<=length(full_paths)){
   df = df[,-1]
   
   # compute win tie loss
-  res.1 = compute.win.tie.loss(data = df, measure.type)
+  res = win.tie.loss.compute(data = df, measure.type)
   
   #here you must put the method's order
-  res.1$method <- factor(res.1$method, levels = methods.names)
+  res$method <- factor(res$method, levels = methods.names)
   
   # reorder
-  res.1 <- res.1[order(res.1$method), ]
+  res <- res[order(res$method), ]
   
   # save
-  save = paste(FolderWTL, "/measure-1.csv", sep="")
-  write.csv(res.1, save, row.names = FALSE)
+  save = paste(FolderResults, "/", file_names[i], ".csv", sep="")
+  write.csv(res, save, row.names = FALSE)
   
   # you can change win, tie, loss to you language mother
   wtl = c("win", "tie", "loss")
-  colnames(res.1) = wtl 
+  colnames(res) = wtl 
   
   # here you must change the following parameters:
   # width
@@ -77,8 +119,8 @@ while(i<=length(full_paths)){
   # right
   # size.font
   # They must be changed to fit the PDF
-  save = paste(FolderWTL, "/measure-1.pdf", sep="")
-  plot.win.tie.loss(data = res.1, 
+  save = paste(FolderResults, "/", file_names[i], ".pdf", sep="")
+  win.tie.loss.plot(data = res, 
                     names.methods = methods.names, 
                     name.file = save, 
                     width = 18, 
@@ -97,9 +139,4 @@ while(i<=length(full_paths)){
   
   i = i + 1
 }
-
-cat("\n")
-
-
-
 
