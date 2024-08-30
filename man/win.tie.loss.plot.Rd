@@ -49,7 +49,7 @@ This function generates a barplot visualizing the win-tie-loss summary
 for different methods. The plot is saved as a PDF file.
 }
 \examples{
-df <- random.dataframe()
+#' 
 result <- win.tie.loss.compute(df, 1)
 win.tie.loss.plot(result, names(result$method), "win_tie_loss.pdf", 
                   10, 7, 5, 4, 3, 2, 1.5, c("Win", "Tie", "Loss"))

@@ -20,7 +20,6 @@ This function calculates the win, tie, and loss summary between pairs of
 methods based on their scores for a given measure type.
 }
 \examples{
-df <- random.dataframe()
 result <- win.tie.loss.compute(df, 1)
 print(result)
 }

@@ -75,6 +75,17 @@
 </ul>
 </div>
 <div class="section level2">
+<h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
+</h2>
+<pre class="plaintext"><code>@misc{WinTieLoss2024,
+  author = {Elaine Cecília Gatto},
+  title = {WinTieLoss: A package to compare methods},
+  year = {2024},
+  note = {R package version 0.1.0. Licensed under CC BY-NC-SA 4.0},
+  url = {https://github.com/cissagatto/WinTieLoss}
+}</code></pre>
+</div>
+<div class="section level2">
 <h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
 <div class="section level3">
@@ -120,14 +131,15 @@
 </tr>
 </tbody>
 </table>
-<p>Save your CSV file in the <code>CSVs</code> folder or specify a custom path when calling the functions.</p>
+<p>Save your CSV file in the <code>Data</code> folder or specify a custom path when calling the functions.</p>
 </div>
 <div class="section level3">
-<h3 id="step-2-calculate-win-tie-loss">Step 2: Calculate Win-Tie-Loss<a class="anchor" aria-label="anchor" href="#step-2-calculate-win-tie-loss"></a>
+<h3 id="step-2-compute-win-tie-loss">Step 2: Compute Win-Tie-Loss<a class="anchor" aria-label="anchor" href="#step-2-compute-win-tie-loss"></a>
 </h3>
-<p>To compute the win-tie-loss metrics, load your data and call the function:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">compute.win.tie.loss</span><span class="op">(</span><span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span></code></pre></div>
+<p>To compute the win-tie-loss metrics, load your data and call the function. Don’t forget to install the package.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">WinTieLoss</span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/win.tie.loss.compute.html">win.tie.loss.compute</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>data</code></strong>: Your dataset in CSV format, read into a DataFrame.</li>
@@ -146,8 +158,8 @@
 <h3 id="step-3-visualize-your-results">Step 3: Visualize Your Results<a class="anchor" aria-label="anchor" href="#step-3-visualize-your-results"></a>
 </h3>
 <p>Generate a bar plot to visualize your win-tie-loss comparison:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">plot.win.tie.loss</span><span class="op">(</span>data <span class="op">=</span> <span class="va">result</span>, </span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/win.tie.loss.plot.html">win.tie.loss.plot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">result</span>, </span>
 <span>                  names.methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"method1"</span>, <span class="st">"method2"</span>, <span class="st">"method3"</span><span class="op">)</span>,</span>
 <span>                  name.file <span class="op">=</span> <span class="st">"~/Plots/measure1.pdf"</span>,</span>
 <span>                  width <span class="op">=</span> <span class="fl">10</span>, height <span class="op">=</span> <span class="fl">7</span>,</span>
@@ -156,11 +168,11 @@
 <span>                  wtl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Win"</span>, <span class="st">"Tie"</span>, <span class="st">"Loss"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
-<strong><code>data</code></strong>: The result from <code>compute.win.tie.loss</code>.</li>
+<strong><code>data</code></strong>: The result from <code>win.tie.loss.compute</code>.</li>
 <li>
 <strong><code>names.methods</code></strong>: A vector of method names to label your plot.</li>
 <li>
-<strong><code>name.file</code></strong>: The path to save the plot as a PDF.</li>
+<strong><code>name.file</code></strong>: The path and file name to save the plot as a PDF.</li>
 <li>
 <strong><code>width</code>, <code>height</code></strong>: Dimensions of the PDF.</li>
 <li>
@@ -168,21 +180,25 @@
 <li>
 <strong><code>size.font</code></strong>: Font size for the plot labels.</li>
 <li>
-<strong><code>wtl</code></strong>: A vector with labels for “Win”, “Tie”, and “Loss” (can be localized).</li>
+<strong><code>wtl</code></strong>: A vector with labels for “Win”, “Tie”, and “Loss” (you can change to your language).</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
 <h2 id="example-use-case">Example Use Case<a class="anchor" aria-label="anchor" href="#example-use-case"></a>
 </h2>
-<p>Imagine you’re comparing the performance of several machine learning models on different datasets. After computing the results using <code>compute.win.tie.loss</code>, you can easily generate a visual comparison highlighting which methods perform best overall.</p>
+<p>Imagine you’re comparing the performance of several machine learning models on different datasets. After computing the results using <code>win.tie.loss.compute</code>, you can easily generate a visual comparison highlighting which methods perform best overall.</p>
+<div class="section level3">
+<h3 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h3>
+<p>For more detailed documentation on each function, check out the <code>~/WinTieLoss/docs</code>folder</p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+<h2 id="id_-contributing">📚 <strong>Contributing</strong>
+<a class="anchor" aria-label="anchor" href="#id_-contributing"></a>
 </h2>
-<p>We welcome contributions! If you find a bug or have a feature request, please open an issue on our GitHub page. You can also contribute by submitting a pull request.</p>
-<hr>
-<p>Start making informed decisions with the Win-Tie-Loss Tool today! 🚀</p>
+<p>We welcome contributions from the community! If you have suggestions, improvements, or bug fixes, please submit a pull request or open an issue in the GitHub repository.</p>
 </div>
 <div class="section level2">
 <h2 id="acknowledgment">Acknowledgment<a class="anchor" aria-label="anchor" href="#acknowledgment"></a>
@@ -193,17 +209,20 @@
 <li>The authors also thank the Brazilian research agencies FAPESP financial support.</li>
 </ul>
 </div>
+<div class="section level2">
+<h2 id="id_-contact">📧 <strong>Contact</strong>
+<a class="anchor" aria-label="anchor" href="#id_-contact"></a>
+</h2>
+<p>For any questions or support, please contact: - <strong>Prof. Elaine Cecilia Gatto</strong> (<a href="mailto:elainececiliagatto@gmail.com" class="email">elainececiliagatto@gmail.com</a>)</p>
 </div>
-<div class="section level1">
-<h1 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
-</h1>
-<p><a href="mailto:elainececiliagatto@gmail.com" class="email">elainececiliagatto@gmail.com</a></p>
 </div>
 <div class="section level1">
 <h1 id="links">Links<a class="anchor" aria-label="anchor" href="#links"></a>
 </h1>
 <div class="line-block">
 <a href="https://sites.google.com/view/professor-cissa-gatto" class="external-link">Site</a> | <a href="http://ppgcc.dc.ufscar.br/pt-br" class="external-link">Post-Graduate Program in Computer Science</a> | <a href="https://site.dc.ufscar.br/" class="external-link">Computer Department</a> | <a href="http://www.biomal.ufscar.br/" class="external-link">Biomal</a> | <a href="https://www.gov.br/cnpq/pt-br" class="external-link">CNPQ</a> | <a href="https://kulak.kuleuven.be/" class="external-link">Ku Leuven</a> | <a href="https://www.embarcados.com.br/author/cissa/" class="external-link">Embarcados</a> | <a href="https://prensa.li/@cissa.gatto/" class="external-link">Read Prensa</a> | <a href="https://www.linkedin.com/company/27241216" class="external-link">Linkedin Company</a> | <a href="https://www.linkedin.com/in/elainececiliagatto/" class="external-link">Linkedin Profile</a> | <a href="https://www.instagram.com/cissagatto" class="external-link">Instagram</a> | <a href="https://www.facebook.com/cissagatto" class="external-link">Facebook</a> | <a href="https://twitter.com/cissagatto" class="external-link">Twitter</a> | <a href="https://www.twitch.tv/cissagatto" class="external-link">Twitch</a> | <a href="https://www.youtube.com/CissaGatto" class="external-link">Youtube</a> |</div>
+<hr>
+<p>Start making informed decisions with the Win-Tie-Loss Tool today! 🚀</p>
 </div>
 
   </div>
@@ -212,7 +231,7 @@
     <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
+<li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0" class="external-link">CC BY-NC-SA 4.0</a></li>
 </ul>
 </div>
 

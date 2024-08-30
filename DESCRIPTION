@@ -4,7 +4,8 @@ Title: A package for multi-label win-tie-loss computation
 Version: 0.1.0
 Author: Elaine Cecília Gatto
 Description: Compute the total wind, tie, and loss
-License: GPL-3
+Depends: R (>= 4.0)
+License: CC BY-NC-SA 4.0
 Maintainer: Prof. Elaine Cecilia Gatto <elainececiliagattto@gmail.com>
 Encoding: UTF-8
 RoxygenNote: 7.3.2
