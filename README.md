@@ -17,6 +17,7 @@ Welcome to the **Win-Tie-Loss Tool**, an easy-to-use R package for comparing mul
   author = {Elaine Cecília Gatto},
   title = {WinTieLoss: A package to compare methods},  
   year = {2024},
+  doi = {10.13140/RG.2.2.17131.35366/1},
   note = {R package version 0.1.0. Licensed under CC BY-NC-SA 4.0},
   url = {https://github.com/cissagatto/WinTieLoss}
 }
