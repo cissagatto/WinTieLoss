@@ -24,6 +24,16 @@ Welcome to the **Win-Tie-Loss Tool**, an easy-to-use R package for comparing mul
 ```
 
 
+## Instalation
+
+
+```r
+# install.packages("devtools")
+library("devtools")
+devtools::install_github("https://github.com/cissagatto/WinTieLoss")
+library(WinTieLoss)
+```
+
 
 ## Getting Started
 
