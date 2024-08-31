@@ -1,6 +1,6 @@
 # Win-Tie-Loss Performance Analysis 
 
-Welcome to the **Win-Tie-Loss Performance Analysis **, an easy-to-use R package for comparing multiple methods across different datasets. This tool calculates and visualizes the win-tie-loss outcomes between methods using a single command. Whether you're working on machine learning, bioinformatics, or any other domain where method comparison is crucial, this tool has you covered.
+Welcome to the **Win-Tie-Loss Performance Analysis**, an easy-to-use R package for comparing multiple methods across different datasets. This tool calculates and visualizes the win-tie-loss outcomes between methods using a single command. Whether you're working on machine learning, bioinformatics, or any other domain where method comparison is crucial, this tool has you covered.
 
 ## Key Features
 
