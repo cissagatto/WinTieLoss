@@ -13,9 +13,9 @@ Welcome to the **Win-Tie-Loss Performance Analysis**, an easy-to-use R package f
 ## How to cite
 
 ```plaintext
-@misc{WinTieLoss2024,
+@misc{WTL2024,
   author = {Elaine Cecília Gatto},
-  title = {WinTieLoss: A package to compare methods},  
+  title = {WinTieLoss: An R Package for Comparative Analysis of Machine Learning Methods},  
   year = {2024},
   doi = {10.13140/RG.2.2.17131.35366/1},
   note = {R package version 0.1.0. Licensed under CC BY-NC-SA 4.0},
