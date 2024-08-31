@@ -33,9 +33,9 @@ In the context of **Machine Learning**, models are frequently compared to determ
 
 ## Mathematical Formalization
 
-To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have M methods (or models) and N datasets. Each method m_i produces a performance metric P_{i,j} on a dataset D_j.
+To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have M methods (or models) and N datasets. Each method m_i produces a performance metric $P_{i,j}$ on a dataset $D_j.$
 
-W_i = Σ_{k ≠ i} Σ_{j=1}^{N} I(P_{i,j} > P_{k,j})
+$W_i = Σ_{k ≠ i} Σ_{j=1}^{N} I(P_{i,j} > P_{k,j})$
 
 
 1. **Method Combinations**: For each pair of methods \((m_i, m_k)\) where \(i \neq k \), you compare the results \(P_{i,j}\) and \( P_{k,j} \) on each dataset \( D_j \).
