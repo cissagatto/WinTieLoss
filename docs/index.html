@@ -22,7 +22,7 @@
 
 
     <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <header><div class="navbar navbar- navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -43,7 +43,21 @@
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-sun"></span>
+
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="dropdown-header">Light</li>
+    <li class="dropdown-header">Dark</li>
+    <li class="dropdown-header">Auto</li>
+  </ul>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -57,9 +71,9 @@
   <div class="contents col-md-9">
 
 <div class="section level1">
-<div class="page-header"><h1 id="win-tie-loss-tool">Win-Tie-Loss Tool<a class="anchor" aria-label="anchor" href="#win-tie-loss-tool"></a>
+<div class="page-header"><h1 id="win-tie-loss-performance-analysis">Win-Tie-Loss Performance Analysis<a class="anchor" aria-label="anchor" href="#win-tie-loss-performance-analysis"></a>
 </h1></div>
-<p>Welcome to the <strong>Win-Tie-Loss Tool</strong>, an easy-to-use R package for comparing multiple methods across different datasets. This tool allows you to calculate and visualize the win-tie-loss outcomes between methods using a single command. Whether you’re working on machine learning, bioinformatics, or any other domain where method comparison is crucial, this tool has you covered.</p>
+<p>Welcome to the <strong>Win-Tie-Loss Performance Analysis</strong>, an easy-to-use R package for comparing multiple methods across different datasets. This tool calculates and visualizes the win-tie-loss outcomes between methods using a single command. Whether you’re working on machine learning, bioinformatics, or any other domain where method comparison is crucial, this tool has you covered.</p>
 <div class="section level2">
 <h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
 </h2>
@@ -67,23 +81,89 @@
 <li>
 <strong>Automatic Win-Tie-Loss Calculation</strong>: Quickly compute win-tie-loss comparisons across multiple methods.</li>
 <li>
-<strong>Flexible Measure Types</strong>: Supports both maximization (e.g., precision) and minimization (e.g., hamming loss) objectives.</li>
+<strong>Flexible Measure Types</strong>: This type supports both maximization (e.g., precision) and minimization (e.g., hamming loss) objectives.</li>
 <li>
-<strong>Customizable Visualizations</strong>: Generate professional bar plots to visualize your results with full control over layout and design.</li>
+<strong>Customizable Visualizations</strong>: Generate professional bar plots to visualize your results with complete control over layout and design.</li>
 <li>
-<strong>Easy-to-Use</strong>: Simply provide your data in CSV format, call the functions, and get your results.</li>
+<strong>Easy-to-Use</strong>: Provide your data in CSV format, call the functions, and get your results.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
 </h2>
-<pre class="plaintext"><code>@misc{WinTieLoss2024,
+<pre class="plaintext"><code>@misc{WTL2024,
   author = {Elaine Cecília Gatto},
-  title = {WinTieLoss: A package to compare methods},
+  title = {WinTieLoss: An R Package for Comparative Analysis of Machine Learning Methods},
   year = {2024},
+  doi = {10.13140/RG.2.2.17131.35366/1},
   note = {R package version 0.1.0. Licensed under CC BY-NC-SA 4.0},
   url = {https://github.com/cissagatto/WinTieLoss}
 }</code></pre>
+</div>
+<div class="section level2">
+<h2 id="what-is-a-win-tie-loss-chart">What is a Win-Tie-Loss Chart?<a class="anchor" aria-label="anchor" href="#what-is-a-win-tie-loss-chart"></a>
+</h2>
+<p>A Win-Tie-Loss chart is a visual tool for comparing the performance of different algorithms or methods across multiple tasks or datasets. This type of chart summarizes how often a method “wins,” “ties,” or “loses” compared to other methods based on a specific performance metric.</p>
+</div>
+<div class="section level2">
+<h2 id="concept-and-context">Concept and Context<a class="anchor" aria-label="anchor" href="#concept-and-context"></a>
+</h2>
+<p>In the context of <strong>Machine Learning</strong>, models are frequently compared to determine which offers the best performance in accuracy, recall, F1-score, or any other metric of interest. The Win-Tie-Loss chart is handy when dealing with multiple methods and datasets, as it provides a clear and aggregated view of how each method performs relative to others.</p>
+</div>
+<div class="section level2">
+<h2 id="mathematical-formalization">Mathematical Formalization<a class="anchor" aria-label="anchor" href="#mathematical-formalization"></a>
+</h2>
+<p>To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> methods (or models) and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> datasets. Each method <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_{i}</annotation></semantics></math> produces a performance metric <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">P_{i,j}</annotation></semantics></math> on a dataset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_{j}</annotation></semantics></math>.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Method Combinations</strong>: For each pair of methods <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>m</mi><mi>i</mi></msub><mo>,</mo><msub><mi>m</mi><mi>k</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(m_{i},m_{k})</annotation></semantics></math> where $i k $, you compare the results <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">P_{i,j}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">P_{k,j}</annotation></semantics></math> on each dataset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_{j}</annotation></semantics></math>.</p></li>
+<li>
+<p><strong>Counting Wins, Ties, and Losses</strong>:</p>
+<ul>
+<li>
+<strong>Win</strong>: Method <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_{i}</annotation></semantics></math> wins against method <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>k</mi></msub><annotation encoding="application/x-tex">m_{k}</annotation></semantics></math> on dataset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_{j}</annotation></semantics></math> if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>&gt;</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{i,j} &gt; P_{k,j}</annotation></semantics></math>.</li>
+<li>
+<strong>Tie</strong>: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_{i}</annotation></semantics></math> ties with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>k</mi></msub><annotation encoding="application/x-tex">m_{k}</annotation></semantics></math> on dataset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_{j}</annotation></semantics></math> if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{i,j} = P_{k,j}</annotation></semantics></math>.</li>
+<li>
+<strong>Loss</strong>: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_{i}</annotation></semantics></math> loses to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>k</mi></msub><annotation encoding="application/x-tex">m_{k}</annotation></semantics></math> on dataset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_{j}</annotation></semantics></math> if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>&lt;</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">P_{i,j} &lt; P_{k,j}</annotation></semantics></math>.</li>
+</ul>
+</li>
+<li><p><strong>Aggregating Results</strong>: After comparing all method pairs and datasets, you count the total number of wins, ties, and losses for each method relative to the others.</p></li>
+</ol>
+<p>Mathematically, we can define the counts <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>W</mi><mi>i</mi></msub><annotation encoding="application/x-tex">W_{i}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mi>i</mi></msub><annotation encoding="application/x-tex">T_{i}</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>L</mi><mi>i</mi></msub><annotation encoding="application/x-tex">L_{i}</annotation></semantics></math> for method <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_{i}</annotation></semantics></math> as follows:</p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>W</mi><mi>i</mi></msub><mo>=</mo><msub><mo>∑</mo><mrow><mi>k</mi><mo>≠</mo><mi>i</mi></mrow></msub><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>&gt;</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">W_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} &gt; P_{k,j})</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>i</mi></msub><mo>=</mo><msub><mo>∑</mo><mrow><mi>k</mi><mo>≠</mo><mi>i</mi></mrow></msub><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">T_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j})</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>i</mi></msub><mo>=</mo><msub><mo>∑</mo><mrow><mi>k</mi><mo>≠</mo><mi>i</mi></mrow></msub><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>&lt;</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">L_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} &lt; P_{k,j})</annotation></semantics></math></li>
+</ul>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{I}(\cdot)</annotation></semantics></math> is an indicator function that returns 1 if the condition inside is true and 0 otherwise.</p>
+<div class="section level3">
+<h3 id="interpretation-in-the-context-of-machine-learning">Interpretation in the Context of Machine Learning<a class="anchor" aria-label="anchor" href="#interpretation-in-the-context-of-machine-learning"></a>
+</h3>
+<p>In the context of Machine Learning, the Win-Tie-Loss chart helps answer important questions like:</p>
+<ul>
+<li>
+<strong>Which method is consistently better?</strong>: A method with more “wins” across different datasets can be considered more robust.</li>
+<li>
+<strong>Are there comparable methods?</strong>: Many “ties” might indicate that some methods perform similarly.</li>
+<li>
+<strong>Which methods are consistently worse?</strong>: A method with more “losses” might be inferior or unsuitable for the task at hand.</li>
+</ul>
+<p>The chart provides a quick visualization of these aspects, making it easier to decide which model or algorithm to use in future tasks or experiments.</p>
+</div>
+<div class="section level3">
+<h3 id="example-of-application">Example of Application<a class="anchor" aria-label="anchor" href="#example-of-application"></a>
+</h3>
+<p>Suppose you have three classification models <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>, and you apply them to 10 different datasets. After calculating the performance metric for each model on each dataset, you compare the results. If model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> wins on <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math> datasets, ties on <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>, and loses on <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>, your Win-Tie-Loss chart may show that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> is the best model overall, while <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> have more losses or ties. In summary, a Win-Tie-Loss chart is an effective way to summarize and interpret comparisons between multiple methods in machine learning problems, highlighting the relative performance of the methods clearly and concisely.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="instalation">Instalation<a class="anchor" aria-label="anchor" href="#instalation"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"https://github.com/cissagatto/WinTieLoss"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">WinTieLoss</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
@@ -136,10 +216,18 @@
 <div class="section level3">
 <h3 id="step-2-compute-win-tie-loss">Step 2: Compute Win-Tie-Loss<a class="anchor" aria-label="anchor" href="#step-2-compute-win-tie-loss"></a>
 </h3>
-<p>To compute the win-tie-loss metrics, load your data and call the function. Don’t forget to install the package.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">WinTieLoss</span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/win.tie.loss.compute.html">win.tie.loss.compute</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span></code></pre></div>
+<p>To compute the win-tie-loss, load your data and call the function.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">name.file</span> <span class="op">=</span> <span class="st">"~/WinTieLoss/Data/clp.csv"</span></span>
+<span><span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">name.file</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">methods.names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_res.mes</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wtl.measures.html">wtl.measures</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">filtered_res.mes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">df_res.mes</span>, <span class="va">names</span> <span class="op">==</span> <span class="st">"clp"</span><span class="op">)</span></span>
+<span><span class="va">measure.type</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">filtered_res.mes</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="reference/win.tie.loss.compute.html">win.tie.loss.compute</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>data</code></strong>: Your dataset in CSV format, read into a DataFrame.</li>
@@ -158,14 +246,28 @@
 <h3 id="step-3-visualize-your-results">Step 3: Visualize Your Results<a class="anchor" aria-label="anchor" href="#step-3-visualize-your-results"></a>
 </h3>
 <p>Generate a bar plot to visualize your win-tie-loss comparison:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/win.tie.loss.plot.html">win.tie.loss.plot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">result</span>, </span>
-<span>                  names.methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"method1"</span>, <span class="st">"method2"</span>, <span class="st">"method3"</span><span class="op">)</span>,</span>
-<span>                  name.file <span class="op">=</span> <span class="st">"~/Plots/measure1.pdf"</span>,</span>
-<span>                  width <span class="op">=</span> <span class="fl">10</span>, height <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>                  bottom <span class="op">=</span> <span class="fl">5</span>, left <span class="op">=</span> <span class="fl">4</span>, top <span class="op">=</span> <span class="fl">2</span>, right <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                  size.font <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                  wtl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Win"</span>, <span class="st">"Tie"</span>, <span class="st">"Loss"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">method</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span>, levels <span class="op">=</span> <span class="va">methods.names</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.csv"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">res</span>, <span class="va">save</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wtl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"win"</span>, <span class="st">"tie"</span>, <span class="st">"loss"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">=</span> <span class="va">wtl</span> </span>
+<span></span>
+<span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.pdf"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/win.tie.loss.plot.html">win.tie.loss.plot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res</span>, </span>
+<span>                  names.methods <span class="op">=</span> <span class="va">methods.names</span>, </span>
+<span>                  name.file <span class="op">=</span> <span class="va">save</span>, </span>
+<span>                  width <span class="op">=</span> <span class="fl">18</span>, </span>
+<span>                  height <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>                  bottom <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>                  left <span class="op">=</span> <span class="fl">11</span>, </span>
+<span>                  top <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>                  right <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                  size.font <span class="op">=</span> <span class="fl">2.0</span>,</span>
+<span>                  wtl <span class="op">=</span> <span class="va">wtl</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>data</code></strong>: The result from <code>win.tie.loss.compute</code>.</li>
@@ -183,15 +285,23 @@
 <strong><code>wtl</code></strong>: A vector with labels for “Win”, “Tie”, and “Loss” (you can change to your language).</li>
 </ul>
 </div>
-</div>
-<div class="section level2">
-<h2 id="example-use-case">Example Use Case<a class="anchor" aria-label="anchor" href="#example-use-case"></a>
-</h2>
-<p>Imagine you’re comparing the performance of several machine learning models on different datasets. After computing the results using <code>win.tie.loss.compute</code>, you can easily generate a visual comparison highlighting which methods perform best overall.</p>
 <div class="section level3">
 <h3 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h3>
-<p>For more detailed documentation on each function, check out the <code>~/WinTieLoss/docs</code>folder</p>
+<p>For more detailed documentation on each function, check out the <code>~/WinTieLoss/docs</code> folder. A complete example is available in <code>~/WinTieLoss/example</code> folder.</p>
+</div>
+<div class="section level3">
+<h3 id="folder-structure">Folder Structure<a class="anchor" aria-label="anchor" href="#folder-structure"></a>
+</h3>
+<p>Ensure the following folder structure is set up:</p>
+<ul>
+<li>
+<code>FolderRoot</code>: Root directory of the project.</li>
+<li>
+<code>FolderData</code>: Directory where CSV data files are stored.</li>
+<li>
+<code>FolderResults</code>: Directory where results and plots are saved.</li>
+</ul>
 </div>
 </div>
 <div class="section level2">
@@ -222,7 +332,7 @@
 <div class="line-block">
 <a href="https://sites.google.com/view/professor-cissa-gatto" class="external-link">Site</a> | <a href="http://ppgcc.dc.ufscar.br/pt-br" class="external-link">Post-Graduate Program in Computer Science</a> | <a href="https://site.dc.ufscar.br/" class="external-link">Computer Department</a> | <a href="http://www.biomal.ufscar.br/" class="external-link">Biomal</a> | <a href="https://www.gov.br/cnpq/pt-br" class="external-link">CNPQ</a> | <a href="https://kulak.kuleuven.be/" class="external-link">Ku Leuven</a> | <a href="https://www.embarcados.com.br/author/cissa/" class="external-link">Embarcados</a> | <a href="https://prensa.li/@cissa.gatto/" class="external-link">Read Prensa</a> | <a href="https://www.linkedin.com/company/27241216" class="external-link">Linkedin Company</a> | <a href="https://www.linkedin.com/in/elainececiliagatto/" class="external-link">Linkedin Profile</a> | <a href="https://www.instagram.com/cissagatto" class="external-link">Instagram</a> | <a href="https://www.facebook.com/cissagatto" class="external-link">Facebook</a> | <a href="https://twitter.com/cissagatto" class="external-link">Twitter</a> | <a href="https://www.twitch.tv/cissagatto" class="external-link">Twitch</a> | <a href="https://www.youtube.com/CissaGatto" class="external-link">Youtube</a> |</div>
 <hr>
-<p>Start making informed decisions with the Win-Tie-Loss Tool today! 🚀</p>
+<p>Start making performance analysis with the Win-Tie-Loss Tool today! 🚀</p>
 </div>
 
   </div>

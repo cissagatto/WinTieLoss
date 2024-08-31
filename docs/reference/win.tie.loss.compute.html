@@ -7,7 +7,7 @@ methods based on their scores for a given measure type."><!-- mathjax --><script
 
 
     <div class="container template-reference-topic">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <header><div class="navbar navbar- navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -26,7 +26,18 @@ methods based on their scores for a given measure type."><!-- mathjax --><script
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-sun"></span>
+
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li class="dropdown-header">Light</li>
+    <li class="dropdown-header">Dark</li>
+    <li class="dropdown-header">Auto</li>
+  </ul></li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -69,11 +80,59 @@ defines the win/loss criteria.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">win.tie.loss.compute</span><span class="op">(</span><span class="va">df</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>is.na() applied to non-(list or vector) of type 'closure'</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data[is.na(data)] &lt;- 0:</span> object of type 'closure' is not subsettable</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'result' not found</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">name.file</span> <span class="op">=</span> <span class="st">"~/WinTieLoss/Data/clp.csv"</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">name.file</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">methods.names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df_res.mes</span> <span class="op">&lt;-</span> <span class="fu"><a href="wtl.measures.html">wtl.measures</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">filtered_res.mes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">df_res.mes</span>, <span class="va">names</span> <span class="op">==</span> <span class="st">"clp"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in names == "clp":</span> comparison (==) is possible only for atomic and list types</span>
+<span class="r-in"><span><span class="va">measure.type</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">filtered_res.mes</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'filtered_res.mes' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">win.tie.loss.compute</span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'measure.type' not found</span>
+<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">method</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span>, levels <span class="op">=</span> <span class="va">methods.names</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'res' not found</span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'res' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.csv"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FolderResults' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">res</span>, <span class="va">save</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, p):</span> object 'res' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wtl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"win"</span>, <span class="st">"tie"</span>, <span class="st">"loss"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">=</span> <span class="va">wtl</span> </span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'res' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.pdf"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FolderResults' not found</span>
+<span class="r-in"><span><span class="fu"><a href="win.tie.loss.plot.html">win.tie.loss.plot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res</span>, </span></span>
+<span class="r-in"><span>                  names.methods <span class="op">=</span> <span class="va">methods.names</span>, </span></span>
+<span class="r-in"><span>                  name.file <span class="op">=</span> <span class="va">save</span>, width <span class="op">=</span> <span class="fl">18</span>, height <span class="op">=</span> <span class="fl">10</span>, </span></span>
+<span class="r-in"><span>                  bottom <span class="op">=</span> <span class="fl">2</span>, left <span class="op">=</span> <span class="fl">11</span>, top <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="fl">1</span>, </span></span>
+<span class="r-in"><span>                  size.font <span class="op">=</span> <span class="fl">2.0</span>,wtl <span class="op">=</span> <span class="va">wtl</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'res' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

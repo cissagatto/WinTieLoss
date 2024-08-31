@@ -98,7 +98,17 @@ Save your CSV file in the `Data` folder or specify a custom path when calling th
 To compute the win-tie-loss, load your data and call the function.
 
 ```r
-wtl.res <- win.tie.loss.compute(data, measure.type)
+name.file = "~/WinTieLoss/Data/clp.csv"
+data = data.frame(read.csv(name.file))
+data = data[,-1]
+methods.names = colnames(data)
+
+df_res.mes <- wtl.measures()
+filtered_res.mes <- filter(df_res.mes, names == "clp")
+measure.type = as.numeric(filtered_res.mes$type)
+
+res = win.tie.loss.compute(data = data, measure.type)
+
 ```
 
 - **`data`**: Your dataset in CSV format, read into a DataFrame.
@@ -111,12 +121,27 @@ wtl.res <- win.tie.loss.compute(data, measure.type)
 Generate a bar plot to visualize your win-tie-loss comparison:
 
 ```r
-win.tie.loss.plot(data = wtl.res, 
-                  names.methods = c("method1", "method2", "method3"),
-                  name.file = "~/Plots/measure-wtl.pdf",
-                  width = 10, height = 7, bottom = 5,
-                  left = 4, top = 2, right = 2,
-                  size.font = 1, wtl = c("Win", "Tie", "Loss"))
+res$method <- factor(res$method, levels = methods.names)
+res <- res[order(res$method), ]
+
+save = paste(FolderResults, "/clp.csv", sep="")
+write.csv(res, save, row.names = FALSE)
+
+wtl = c("win", "tie", "loss")
+colnames(res) = wtl 
+
+save = paste(FolderResults, "/clp.pdf", sep="")
+win.tie.loss.plot(data = res, 
+                  names.methods = methods.names, 
+                  name.file = save, 
+                  width = 18, 
+                  height = 10, 
+                  bottom = 2, 
+                  left = 11, 
+                  top = 0, 
+                  right = 1, 
+                  size.font = 2.0,
+                  wtl = wtl)
 ```
 
 - **`data`**: The result from `win.tie.loss.compute`.

@@ -57,7 +57,8 @@ FolderScripts = "~/WinTieLoss/R"
 #' @export
 #'
 #' @examples
-#' random.dataframe()
+#' rdf <- random.dataframe()
+#' rdf
 random.dataframe <- function(){
   
   # Define the folder path where the CSV file will be saved
@@ -97,8 +98,33 @@ random.dataframe <- function(){
 #' @export
 #'
 #' @examples
-#' result <- win.tie.loss.compute(df, 1)
-#' print(result)
+#' name.file = "~/WinTieLoss/Data/clp.csv"
+#' data = data.frame(read.csv(name.file))
+#' data = data[,-1]
+#' methods.names = colnames(data)
+#'
+#' df_res.mes <- wtl.measures()
+#' filtered_res.mes <- filter(df_res.mes, names == "clp")
+#' measure.type = as.numeric(filtered_res.mes$type)
+#' 
+#' res = win.tie.loss.compute(data = data, measure.type)
+#' res$method <- factor(res$method, levels = methods.names)
+#' res <- res[order(res$method), ]
+#' 
+#' save = paste(FolderResults, "/clp.csv", sep="")
+#' write.csv(res, save, row.names = FALSE)
+#'
+#' wtl = c("win", "tie", "loss")
+#' colnames(res) = wtl 
+#' 
+#' save = paste(FolderResults, "/clp.pdf", sep="")
+#' win.tie.loss.plot(data = res, 
+#'                   names.methods = methods.names, 
+#'                   name.file = save, width = 18, height = 10, 
+#'                   bottom = 2, left = 11, top = 0, right = 1, 
+#'                   size.font = 2.0,wtl = wtl)
+#' 
+#' 
 win.tie.loss.compute <- function(data, measure.type) {
   
   # Replace NA values with 0
@@ -178,10 +204,34 @@ win.tie.loss.compute <- function(data, measure.type) {
 #' @return A PDF file containing the win-tie-loss barplot.
 #' @export
 #'
-#' @examples#' 
-#' result <- win.tie.loss.compute(df, 1)
-#' win.tie.loss.plot(result, names(result$method), "win_tie_loss.pdf", 
-#'                   10, 7, 5, 4, 3, 2, 1.5, c("Win", "Tie", "Loss"))
+#' @examples 
+#' name.file = "~/WinTieLoss/Data/clp.csv"
+#' data = data.frame(read.csv(name.file))
+#' data = data[,-1]
+#' methods.names = colnames(data)
+#'
+#' df_res.mes <- wtl.measures()
+#' filtered_res.mes <- filter(df_res.mes, names == "clp")
+#' measure.type = as.numeric(filtered_res.mes$type)
+#' 
+#' res = win.tie.loss.compute(data = data, measure.type)
+#' res$method <- factor(res$method, levels = methods.names)
+#' res <- res[order(res$method), ]
+#' 
+#' save = paste(FolderResults, "/clp.csv", sep="")
+#' write.csv(res, save, row.names = FALSE)
+#'
+#' wtl = c("win", "tie", "loss")
+#' colnames(res) = wtl 
+#' 
+#' save = paste(FolderResults, "/clp.pdf", sep="")
+#' win.tie.loss.plot(data = res, 
+#'                   names.methods = methods.names, 
+#'                   name.file = save, width = 18, height = 10, 
+#'                   bottom = 2, left = 11, top = 0, right = 1, 
+#'                   size.font = 2.0,wtl = wtl)
+#' 
+#' 
 win.tie.loss.plot <- function(data, names.methods, name.file, 
                               width, height, bottom, 
                               left, top, right, 

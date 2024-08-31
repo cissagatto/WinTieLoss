@@ -15,5 +15,6 @@ and columns, simulating different methods and datasets. The resulting data
 frame is saved as a CSV file.
 }
 \examples{
-random.dataframe()
+rdf <- random.dataframe()
+rdf
 }
