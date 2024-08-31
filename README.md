@@ -64,7 +64,7 @@ The chart provides a quick visualization of these aspects, making it easier to d
 
 ### Example of Application
 
-Suppose you have three classification models $ A $, $ B $, and $ C $, and you apply them to 10 different datasets. After calculating the performance metric for each model on each dataset, you compare the results. If model $ A $ wins on 7 datasets, ties on 2, and loses on 1, your Win-Tie-Loss chart may show that $ A $ is the best model overall, while $ B $ and $ C $ have more losses or ties. In summary, a Win-Tie-Loss chart is an effective way to summarize and interpret comparisons between multiple methods in machine learning problems, highlighting the relative performance of the methods clearly and concisely.
+Suppose you have three classification models $A$, $B$, and $C$, and you apply them to 10 different datasets. After calculating the performance metric for each model on each dataset, you compare the results. If model $A$ wins on $7$ datasets, ties on $2$, and loses on $1$, your Win-Tie-Loss chart may show that $A$ is the best model overall, while $B$ and $C$ have more losses or ties. In summary, a Win-Tie-Loss chart is an effective way to summarize and interpret comparisons between multiple methods in machine learning problems, highlighting the relative performance of the methods clearly and concisely.
 
 
 ## Instalation
@@ -95,10 +95,10 @@ Save your CSV file in the `Data` folder or specify a custom path when calling th
 
 ### Step 2: Compute Win-Tie-Loss
 
-To compute the win-tie-loss metrics, load your data and call the function. Don't forget to install the package.
+To compute the win-tie-loss, load your data and call the function.
 
 ```r
-result <- win.tie.loss.compute(data, measure.type)
+wtl.res <- win.tie.loss.compute(data, measure.type)
 ```
 
 - **`data`**: Your dataset in CSV format, read into a DataFrame.
@@ -111,13 +111,12 @@ result <- win.tie.loss.compute(data, measure.type)
 Generate a bar plot to visualize your win-tie-loss comparison:
 
 ```r
-win.tie.loss.plot(data = result, 
+win.tie.loss.plot(data = wtl.res, 
                   names.methods = c("method1", "method2", "method3"),
-                  name.file = "~/Plots/measure1.pdf",
-                  width = 10, height = 7,
-                  bottom = 5, left = 4, top = 2, right = 2,
-                  size.font = 1, 
-                  wtl = c("Win", "Tie", "Loss"))
+                  name.file = "~/Plots/measure-wtl.pdf",
+                  width = 10, height = 7, bottom = 5,
+                  left = 4, top = 2, right = 2,
+                  size.font = 1, wtl = c("Win", "Tie", "Loss"))
 ```
 
 - **`data`**: The result from `win.tie.loss.compute`.
@@ -131,7 +130,7 @@ win.tie.loss.plot(data = result,
 
 ### Documentation
 
-For more detailed documentation on each function, check out the `~/WinTieLoss/docs` folder
+For more detailed documentation on each function, check out the `~/WinTieLoss/docs` folder.
 
 
 ## 📚 **Contributing**
