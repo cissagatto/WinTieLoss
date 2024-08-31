@@ -33,24 +33,24 @@ In the context of **Machine Learning**, models are frequently compared to determ
 
 ## Mathematical Formalization
 
-To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have M methods (or models) and N datasets. Each method m_i produces a performance metric $P_{i,j}$ on a dataset $D_j.$
+To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have $M$ methods (or models) and $N$ datasets. Each method $m_{i}$ roduces a performance metric $P_{i,j}$ on a dataset $D_{j}$.
 
-1. **Method Combinations**: For each pair of methods $(m_i, m_k)$ where $i \neq k $, you compare the results $P_{i,j}$ and $ P_{k,j} $ on each dataset $ D_j $.
+1. **Method Combinations**: For each pair of methods $(m_{i},m_{k})$ where $i \neq k $, you compare the results $P_{i,j}$ and $P_{k,j}$ on each dataset $D_{j}$.
   
 2. **Counting Wins, Ties, and Losses**:
-    - **Win**: Method $ m_i $ wins against method $ m_k $ on dataset $ D_j $ if $ P_{i,j} > P_{k,j} $.
-    - **Tie**: $ m_i $ ties with $ m_k $ on dataset $ D_j $ if $ P_{i,j} = P_{k,j} $.
-    - **Loss**: $ m_i $ loses to $ m_k $ on dataset $ D_j $ if $ P_{i,j} < P_{k,j} $.
+    - **Win**: Method $m_{i}$ wins against method $m_{i}$ on dataset $D_j $ if $P_{i,j} > P_{k,j}$.
+    - **Tie**: $m_{i}$ ties with $m_{k}$ on dataset $D_{j}$ if $P_{i,j} = P_{k,j}$.
+    - **Loss**: $m_{i}$ loses to $m_{k}$ on dataset $D_{j}$ if $P_{i,j} < P_{k,j}$.
 
 3. **Aggregating Results**: After comparing all method pairs and datasets, you count the total number of wins, ties, and losses for each method relative to the others.
 
-Mathematically, we can define the counts $ W_i $, $ T_i $, and $ L_i $ for method $ m_i $ as follows:
+Mathematically, we can define the counts $W_{i}$, $T_{i}$, and $L_{i}$ for method $m_{i}$ as follows:
 
-- $ W_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j}) $
-- $ T_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j}) $
-- $ L_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j}) $
+- $W_{i} = $\sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j})$
+- $T_{i} = $\sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j})$
+- $L_{i} = $\sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j})$
 
-where $ \text{I}(\cdot) $ is an indicator function that returns 1 if the condition inside it is true and 0 otherwise.
+where $\text{I}(\cdot)$ is an indicator function that returns 1 if the condition inside is true and 0 otherwise.
 
 ### Interpretation in the Context of Machine Learning
 
