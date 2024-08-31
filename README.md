@@ -1,13 +1,13 @@
-# Win-Tie-Loss Tool 
+# Win-Tie-Loss Performance Analysis 
 
-Welcome to the **Win-Tie-Loss Tool**, an easy-to-use R package for comparing multiple methods across different datasets. This tool allows you to calculate and visualize the win-tie-loss outcomes between methods using a single command. Whether you're working on machine learning, bioinformatics, or any other domain where method comparison is crucial, this tool has you covered.
+Welcome to the **Win-Tie-Loss Performance Analysis **, an easy-to-use R package for comparing multiple methods across different datasets. This tool calculates and visualizes the win-tie-loss outcomes between methods using a single command. Whether you're working on machine learning, bioinformatics, or any other domain where method comparison is crucial, this tool has you covered.
 
 ## Key Features
 
 - **Automatic Win-Tie-Loss Calculation**: Quickly compute win-tie-loss comparisons across multiple methods.
-- **Flexible Measure Types**: Supports both maximization (e.g., precision) and minimization (e.g., hamming loss) objectives.
-- **Customizable Visualizations**: Generate professional bar plots to visualize your results with full control over layout and design.
-- **Easy-to-Use**: Simply provide your data in CSV format, call the functions, and get your results.
+- **Flexible Measure Types**: This type supports both maximization (e.g., precision) and minimization (e.g., hamming loss) objectives.
+- **Customizable Visualizations**: Generate professional bar plots to visualize your results with complete control over layout and design.
+- **Easy-to-Use**: Provide your data in CSV format, call the functions, and get your results.
 
 
 ## How to cite
@@ -22,6 +22,49 @@ Welcome to the **Win-Tie-Loss Tool**, an easy-to-use R package for comparing mul
   url = {https://github.com/cissagatto/WinTieLoss}
 }
 ```
+
+## What is a Win-Tie-Loss Chart?
+
+A Win-Tie-Loss chart is a visual tool for comparing the performance of different algorithms or methods across multiple tasks or datasets. This type of chart summarizes how often a method "wins," "ties," or "loses" compared to other methods based on a specific performance metric.
+
+## Concept and Context
+
+In the context of **Machine Learning**, models are frequently compared to determine which offers the best performance in accuracy, recall, F1-score, or any other metric of interest. The Win-Tie-Loss chart is handy when dealing with multiple methods and datasets, as it provides a clear and aggregated view of how each method performs relative to others.
+
+## Mathematical Formalization
+
+To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have \( M \) methods (or models) and \( N \) datasets. Each method \( m_i \) produces a performance metric \( P_{i,j} \) on a dataset \( D_j \).
+
+1. **Method Combinations**: For each pair of methods \( (m_i, m_k) \) where \( i \neq k \), you compare the results \( P_{i,j} \) and \( P_{k,j} \) on each dataset \( D_j \).
+  
+2. **Counting Wins, Ties, and Losses**:
+    - **Win**: Method \( m_i \) wins against method \( m_k \) on dataset \( D_j \) if \( P_{i,j} > P_{k,j} \).
+    - **Tie**: \( m_i \) ties with \( m_k \) on dataset \( D_j \) if \( P_{i,j} = P_{k,j} \).
+    - **Loss**: \( m_i \) loses to \( m_k \) on dataset \( D_j \) if \( P_{i,j} < P_{k,j} \).
+
+3. **Aggregating Results**: After comparing all method pairs and datasets, you count the total number of wins, ties, and losses for each method relative to the others.
+
+Mathematically, we can define the counts \( W_i \), \( T_i \), and \( L_i \) for method \( m_i \) as follows:
+
+- \( W_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j}) \)
+- \( T_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j}) \)
+- \( L_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j}) \)
+
+where \( \text{I}(\cdot) \) is an indicator function that returns 1 if the condition inside it is true and 0 otherwise.
+
+### Interpretation in the Context of Machine Learning
+
+In the context of Machine Learning, the Win-Tie-Loss chart helps answer important questions like:
+
+- **Which method is consistently better?**: A method with more "wins" across different datasets can be considered more robust.
+- **Are there comparable methods?**: Many "ties" might indicate that some methods perform similarly.
+- **Which methods are consistently worse?**: A method with more "losses" might be inferior or unsuitable for the task at hand.
+
+The chart provides a quick visualization of these aspects, making it easier to decide which model or algorithm to use in future tasks or experiments.
+
+### Example of Application
+
+Suppose you have three classification models \( A \), \( B \), and \( C \), and you apply them to 10 different datasets. After calculating the performance metric for each model on each dataset, you compare the results. If model \( A \) wins on 7 datasets, ties on 2, and loses on 1, your Win-Tie-Loss chart may show that \( A \) is the best model overall, while \( B \) and \( C \) have more losses or ties. In summary, a Win-Tie-Loss chart is an effective way to summarize and interpret comparisons between multiple methods in machine learning problems, highlighting the relative performance of the methods clearly and concisely.
 
 
 ## Instalation
@@ -55,7 +98,6 @@ Save your CSV file in the `Data` folder or specify a custom path when calling th
 To compute the win-tie-loss metrics, load your data and call the function. Don't forget to install the package.
 
 ```r
-library(WinTieLoss)
 result <- win.tie.loss.compute(data, measure.type)
 ```
 
@@ -86,15 +128,10 @@ win.tie.loss.plot(data = result,
 - **`size.font`**: Font size for the plot labels.
 - **`wtl`**: A vector with labels for "Win", "Tie", and "Loss" (you can change to your language).
 
-## Example Use Case
-
-Imagine you're comparing the performance of several machine learning models on different datasets. After computing the results using `win.tie.loss.compute`, you can easily generate a visual comparison highlighting which methods perform best overall. 
-
 
 ### Documentation
 
-For more detailed documentation on each function, check out the `~/WinTieLoss/docs`folder
-
+For more detailed documentation on each function, check out the `~/WinTieLoss/docs` folder
 
 
 ## 📚 **Contributing**
@@ -120,4 +157,4 @@ For any questions or support, please contact:
 
 ---
 
-Start making informed decisions with the Win-Tie-Loss Tool today! 🚀
+Start making performance analysis with the Win-Tie-Loss Tool today! 🚀
