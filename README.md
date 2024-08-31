@@ -46,9 +46,9 @@ To understand the mathematical concept behind a Win-Tie-Loss chart, consider a s
 
 Mathematically, we can define the counts $W_{i}$, $T_{i}$, and $L_{i}$ for method $m_{i}$ as follows:
 
-- $W_{i} = $\sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j})$
-- $T_{i} = $\sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j})$
-- $L_{i} = $\sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j})$
+- $W_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j})$
+- $T_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j})$
+- $L_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j})$
 
 where $\text{I}(\cdot)$ is an indicator function that returns 1 if the condition inside is true and 0 otherwise.
 
