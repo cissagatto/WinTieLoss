@@ -38,7 +38,7 @@ To understand the mathematical concept behind a Win-Tie-Loss chart, consider a s
 1. **Method Combinations**: For each pair of methods $(m_{i},m_{k})$ where $i \neq k $, you compare the results $P_{i,j}$ and $P_{k,j}$ on each dataset $D_{j}$.
   
 2. **Counting Wins, Ties, and Losses**:
-    - **Win**: Method $m_{i}$ wins against method $m_{i}$ on dataset $D_j $ if $P_{i,j} > P_{k,j}$.
+    - **Win**: Method $m_{i}$ wins against method $m_{k}$ on dataset $D_{j}$ if $P_{i,j} > P_{k,j}$.
     - **Tie**: $m_{i}$ ties with $m_{k}$ on dataset $D_{j}$ if $P_{i,j} = P_{k,j}$.
     - **Loss**: $m_{i}$ loses to $m_{k}$ on dataset $D_{j}$ if $P_{i,j} < P_{k,j}$.
 
