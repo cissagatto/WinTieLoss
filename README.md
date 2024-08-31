@@ -35,25 +35,22 @@ In the context of **Machine Learning**, models are frequently compared to determ
 
 To understand the mathematical concept behind a Win-Tie-Loss chart, consider a scenario where you have M methods (or models) and N datasets. Each method m_i produces a performance metric $P_{i,j}$ on a dataset $D_j.$
 
-$W_i = Σ_{k ≠ i} Σ_{j=1}^{N} I(P_{i,j} > P_{k,j})$
-
-
-1. **Method Combinations**: For each pair of methods \((m_i, m_k)\) where \(i \neq k \), you compare the results \(P_{i,j}\) and \( P_{k,j} \) on each dataset \( D_j \).
+1. **Method Combinations**: For each pair of methods $(m_i, m_k)$ where $i \neq k $, you compare the results $P_{i,j}$ and $ P_{k,j} $ on each dataset $ D_j $.
   
 2. **Counting Wins, Ties, and Losses**:
-    - **Win**: Method \( m_i \) wins against method \( m_k \) on dataset \( D_j \) if \( P_{i,j} > P_{k,j} \).
-    - **Tie**: \( m_i \) ties with \( m_k \) on dataset \( D_j \) if \( P_{i,j} = P_{k,j} \).
-    - **Loss**: \( m_i \) loses to \( m_k \) on dataset \( D_j \) if \( P_{i,j} < P_{k,j} \).
+    - **Win**: Method $ m_i $ wins against method $ m_k $ on dataset $ D_j $ if $ P_{i,j} > P_{k,j} $.
+    - **Tie**: $ m_i $ ties with $ m_k $ on dataset $ D_j $ if $ P_{i,j} = P_{k,j} $.
+    - **Loss**: $ m_i $ loses to $ m_k $ on dataset $ D_j $ if $ P_{i,j} < P_{k,j} $.
 
 3. **Aggregating Results**: After comparing all method pairs and datasets, you count the total number of wins, ties, and losses for each method relative to the others.
 
-Mathematically, we can define the counts \( W_i \), \( T_i \), and \( L_i \) for method \( m_i \) as follows:
+Mathematically, we can define the counts $ W_i $, $ T_i $, and $ L_i $ for method $ m_i $ as follows:
 
-- \( W_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j}) \)
-- \( T_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j}) \)
-- \( L_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j}) \)
+- $ W_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} > P_{k,j}) $
+- $ T_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j}) $
+- $ L_i = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} < P_{k,j}) $
 
-where \( \text{I}(\cdot) \) is an indicator function that returns 1 if the condition inside it is true and 0 otherwise.
+where $ \text{I}(\cdot) $ is an indicator function that returns 1 if the condition inside it is true and 0 otherwise.
 
 ### Interpretation in the Context of Machine Learning
 
@@ -67,7 +64,7 @@ The chart provides a quick visualization of these aspects, making it easier to d
 
 ### Example of Application
 
-Suppose you have three classification models \( A \), \( B \), and \( C \), and you apply them to 10 different datasets. After calculating the performance metric for each model on each dataset, you compare the results. If model \( A \) wins on 7 datasets, ties on 2, and loses on 1, your Win-Tie-Loss chart may show that \( A \) is the best model overall, while \( B \) and \( C \) have more losses or ties. In summary, a Win-Tie-Loss chart is an effective way to summarize and interpret comparisons between multiple methods in machine learning problems, highlighting the relative performance of the methods clearly and concisely.
+Suppose you have three classification models $ A $, $ B $, and $ C $, and you apply them to 10 different datasets. After calculating the performance metric for each model on each dataset, you compare the results. If model $ A $ wins on 7 datasets, ties on 2, and loses on 1, your Win-Tie-Loss chart may show that $ A $ is the best model overall, while $ B $ and $ C $ have more losses or ties. In summary, a Win-Tie-Loss chart is an effective way to summarize and interpret comparisons between multiple methods in machine learning problems, highlighting the relative performance of the methods clearly and concisely.
 
 
 ## Instalation
