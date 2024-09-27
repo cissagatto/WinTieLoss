@@ -152,6 +152,13 @@ win.tie.loss.plot(data = res,
 - **`size.font`**: Font size for the plot labels.
 - **`wtl`**: A vector with labels for "Win", "Tie", and "Loss" (you can change to your language).
 
+### Semi-automated Analysis
+
+If you wish, there are also functions to help you analyze the results. 
+For example, if you compared 30 models using 50 datasets, it may be difficult 
+to interpret the results. See the functions in the analyis.R script, 
+they were written to perform some calculations. There are examples of how 
+to use them in the example.R file, in the example folder.
 
 ### Documentation
 

@@ -135,7 +135,7 @@
 <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>i</mi></msub><mo>=</mo><msub><mo>∑</mo><mrow><mi>k</mi><mo>≠</mo><mi>i</mi></mrow></msub><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">T_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} = P_{k,j})</annotation></semantics></math></li>
 <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>i</mi></msub><mo>=</mo><msub><mo>∑</mo><mrow><mi>k</mi><mo>≠</mo><mi>i</mi></mrow></msub><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>&lt;</mo><msub><mi>P</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">L_{i} = \sum_{k \neq i} \sum_{j=1}^{N} \text{I}(P_{i,j} &lt; P_{k,j})</annotation></semantics></math></li>
 </ul>
-<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{I}(\cdot)</annotation></semantics></math> is an indicator function that returns 1 if the condition inside is true and 0 otherwise.</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">I</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>⋅</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{I}(\cdot)</annotation></semantics></math> is an indicator function that returns 1 if the condition inside is true and 0 otherwise.</p>
 <div class="section level3">
 <h3 id="interpretation-in-the-context-of-machine-learning">Interpretation in the Context of Machine Learning<a class="anchor" aria-label="anchor" href="#interpretation-in-the-context-of-machine-learning"></a>
 </h3>
@@ -284,6 +284,11 @@
 <li>
 <strong><code>wtl</code></strong>: A vector with labels for “Win”, “Tie”, and “Loss” (you can change to your language).</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="semi-automated-analysis">Semi-automated Analysis<a class="anchor" aria-label="anchor" href="#semi-automated-analysis"></a>
+</h3>
+<p>If you wish, there are also functions to help you analyze the results. For example, if you compared 30 models using 50 datasets, it may be difficult to interpret the results. See the functions in the analyis.R script, they were written to perform some calculations. There are examples of how to use them in the example.R file, in the example folder.</p>
 </div>
 <div class="section level3">
 <h3 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>

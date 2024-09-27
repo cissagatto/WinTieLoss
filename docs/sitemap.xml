@@ -3,7 +3,10 @@
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
 <url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/reference/calculate.max.min.html</loc></url>
+<url><loc>/reference/compare.results.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/process_max_min.html</loc></url>
 <url><loc>/reference/random.dataframe.html</loc></url>
 <url><loc>/reference/win.tie.loss.compute.html</loc></url>
 <url><loc>/reference/win.tie.loss.plot.html</loc></url>

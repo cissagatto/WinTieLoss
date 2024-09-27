@@ -241,7 +241,7 @@ win.tie.loss.plot <- function(data, names.methods, name.file,
   soma = apply(data[,-1], 1, sum)
   max.value = soma[1]
   half.value = soma[1] / 2
-  max.value = soma[1] + 18
+  max.value = 550
   
   # Transpose the data frame for plotting
   res = data.frame(t(data))
@@ -267,7 +267,7 @@ win.tie.loss.plot <- function(data, names.methods, name.file,
   
   # Add reference lines
   abline(v = half.value, col = "white")
-  abline(v = 115, col = "white")
+  #abline(v = 115, col = "white")
   
   # Add a legend
   legend("right", wtl, cex = size.font, fill = colors)
