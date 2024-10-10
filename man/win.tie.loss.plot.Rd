@@ -8,6 +8,7 @@ win.tie.loss.plot(
   data,
   names.methods,
   name.file,
+  max.value,
   width,
   height,
   bottom,
@@ -19,61 +20,89 @@ win.tie.loss.plot(
 )
 }
 \arguments{
-\item{data}{A data frame containing the win-tie-loss summary.}
+\item{data}{A data frame containing the win-tie-loss summary, where each row 
+corresponds to a method, and each column corresponds to the counts of wins, 
+ties, and losses.}
 
-\item{names.methods}{A vector of method names to be displayed in the plot.}
+\item{names.methods}{A vector of method names to be displayed along the 
+y-axis of the plot.}
 
-\item{name.file}{The name of the output PDF file.}
+\item{name.file}{The name of the output PDF file, including the path where 
+the file will be saved.}
+
+\item{max.value}{A numeric value indicating the maximum limit for the x-axis. 
+This should correspond to the highest value of the win-tie-loss counts for 
+proper visualization.}
 
 \item{width}{The width of the plot in inches.}
 
 \item{height}{The height of the plot in inches.}
 
-\item{bottom}{Margin size for the bottom of the plot.}
+\item{bottom}{Margin size (in lines) for the bottom of the plot.}
 
-\item{left}{Margin size for the left of the plot.}
+\item{left}{Margin size (in lines) for the left of the plot.}
 
-\item{top}{Margin size for the top of the plot.}
+\item{top}{Margin size (in lines) for the top of the plot.}
 
-\item{right}{Margin size for the right of the plot.}
+\item{right}{Margin size (in lines) for the right of the plot.}
 
-\item{size.font}{Font size for labels and axis text.}
+\item{size.font}{Font size for labels, method names, and axis text.}
 
-\item{wtl}{A character vector indicating the labels for win, tie, and loss.}
+\item{wtl}{A character vector indicating the labels for the respective 
+categories: wins, ties, and losses. Default is `c("win", "tie", "loss")`.}
 }
 \value{
-A PDF file containing the win-tie-loss barplot.
+A PDF file containing the win-tie-loss barplot saved at the specified 
+location. The plot includes a legend and reference lines to aid in 
+interpretation.
 }
 \description{
 This function generates a barplot visualizing the win-tie-loss summary 
-for different methods. The plot is saved as a PDF file.
+for different methods. The resulting plot provides a clear graphical 
+representation of the performance of various methods in terms of wins, ties, 
+and losses. The plot is saved as a PDF file.
 }
 \examples{
-name.file = "~/WinTieLoss/Data/clp.csv"
-data = data.frame(read.csv(name.file))
-data = data[,-1]
-methods.names = colnames(data)
+# Define the file path and read the data
+name.file <- "~/WinTieLoss/Data/clp.csv"
+data <- read.csv(name.file)
+data <- data[,-1]  # Remove the first column if not needed
 
+# Get method names from the data frame
+methods.names <- colnames(data)
+
+# Calculate win-tie-loss measures
 df_res.mes <- wtl.measures()
 filtered_res.mes <- filter(df_res.mes, names == "clp")
-measure.type = as.numeric(filtered_res.mes$type)
+measure.type <- as.numeric(filtered_res.mes$type)
 
-res = win.tie.loss.compute(data = data, measure.type)
+# Compute win-tie-loss summary
+res <- win.tie.loss.compute(data = data, measure.type)
 res$method <- factor(res$method, levels = methods.names)
 res <- res[order(res$method), ]
 
-save = paste(FolderResults, "/clp.csv", sep="")
+# Save results to CSV
+save <- paste(FolderResults, "/clp.csv", sep="")
 write.csv(res, save, row.names = FALSE)
 
-wtl = c("win", "tie", "loss")
-colnames(res) = wtl 
+# Define win-tie-loss labels
+wtl <- c("win", "tie", "loss")
+colnames(res) <- wtl 
 
-save = paste(FolderResults, "/clp.pdf", sep="")
+# Generate and save the barplot
+save <- paste(FolderResults, "/clp.pdf", sep="")
 win.tie.loss.plot(data = res, 
                   names.methods = methods.names, 
-                  name.file = save, width = 18, height = 10, 
-                  bottom = 2, left = 11, top = 0, right = 1, 
-                  size.font = 2.0,wtl = wtl)
+                  name.file = save, 
+                  max.value = 600,  # Set the maximum x-axis value
+                  width = 18, 
+                  height = 10, 
+                  bottom = 2, 
+                  left = 11, 
+                  top = 0, 
+                  right = 1, 
+                  size.font = 2.0, 
+                  wtl = wtl)
 
 
 }

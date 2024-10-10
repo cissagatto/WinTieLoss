@@ -187,49 +187,77 @@ win.tie.loss.compute <- function(data, measure.type) {
 #' Plot Win-Tie-Loss Barplot
 #'
 #' This function generates a barplot visualizing the win-tie-loss summary 
-#' for different methods. The plot is saved as a PDF file.
+#' for different methods. The resulting plot provides a clear graphical 
+#' representation of the performance of various methods in terms of wins, ties, 
+#' and losses. The plot is saved as a PDF file.
 #'
-#' @param data A data frame containing the win-tie-loss summary.
-#' @param names.methods A vector of method names to be displayed in the plot.
-#' @param name.file The name of the output PDF file.
+#' @param data A data frame containing the win-tie-loss summary, where each row 
+#' corresponds to a method, and each column corresponds to the counts of wins, 
+#' ties, and losses.
+#' @param names.methods A vector of method names to be displayed along the 
+#' y-axis of the plot.
+#' @param name.file The name of the output PDF file, including the path where 
+#' the file will be saved.
+#' @param max.value A numeric value indicating the maximum limit for the x-axis. 
+#' This should correspond to the highest value of the win-tie-loss counts for 
+#' proper visualization.
 #' @param width The width of the plot in inches.
 #' @param height The height of the plot in inches.
-#' @param bottom Margin size for the bottom of the plot.
-#' @param left Margin size for the left of the plot.
-#' @param top Margin size for the top of the plot.
-#' @param right Margin size for the right of the plot.
-#' @param size.font Font size for labels and axis text.
-#' @param wtl A character vector indicating the labels for win, tie, and loss.
+#' @param bottom Margin size (in lines) for the bottom of the plot.
+#' @param left Margin size (in lines) for the left of the plot.
+#' @param top Margin size (in lines) for the top of the plot.
+#' @param right Margin size (in lines) for the right of the plot.
+#' @param size.font Font size for labels, method names, and axis text.
+#' @param wtl A character vector indicating the labels for the respective 
+#' categories: wins, ties, and losses. Default is `c("win", "tie", "loss")`.
 #'
-#' @return A PDF file containing the win-tie-loss barplot.
+#' @return A PDF file containing the win-tie-loss barplot saved at the specified 
+#' location. The plot includes a legend and reference lines to aid in 
+#' interpretation.
+#' 
 #' @export
 #'
 #' @examples 
-#' name.file = "~/WinTieLoss/Data/clp.csv"
-#' data = data.frame(read.csv(name.file))
-#' data = data[,-1]
-#' methods.names = colnames(data)
+#' # Define the file path and read the data
+#' name.file <- "~/WinTieLoss/Data/clp.csv"
+#' data <- read.csv(name.file)
+#' data <- data[,-1]  # Remove the first column if not needed
+#' 
+#' # Get method names from the data frame
+#' methods.names <- colnames(data)
 #'
+#' # Calculate win-tie-loss measures
 #' df_res.mes <- wtl.measures()
 #' filtered_res.mes <- filter(df_res.mes, names == "clp")
-#' measure.type = as.numeric(filtered_res.mes$type)
+#' measure.type <- as.numeric(filtered_res.mes$type)
 #' 
-#' res = win.tie.loss.compute(data = data, measure.type)
+#' # Compute win-tie-loss summary
+#' res <- win.tie.loss.compute(data = data, measure.type)
 #' res$method <- factor(res$method, levels = methods.names)
 #' res <- res[order(res$method), ]
 #' 
-#' save = paste(FolderResults, "/clp.csv", sep="")
+#' # Save results to CSV
+#' save <- paste(FolderResults, "/clp.csv", sep="")
 #' write.csv(res, save, row.names = FALSE)
 #'
-#' wtl = c("win", "tie", "loss")
-#' colnames(res) = wtl 
+#' # Define win-tie-loss labels
+#' wtl <- c("win", "tie", "loss")
+#' colnames(res) <- wtl 
 #' 
-#' save = paste(FolderResults, "/clp.pdf", sep="")
+#' # Generate and save the barplot
+#' save <- paste(FolderResults, "/clp.pdf", sep="")
 #' win.tie.loss.plot(data = res, 
 #'                   names.methods = methods.names, 
-#'                   name.file = save, width = 18, height = 10, 
-#'                   bottom = 2, left = 11, top = 0, right = 1, 
-#'                   size.font = 2.0,wtl = wtl)
+#'                   name.file = save, 
+#'                   max.value = 600,  # Set the maximum x-axis value
+#'                   width = 18, 
+#'                   height = 10, 
+#'                   bottom = 2, 
+#'                   left = 11, 
+#'                   top = 0, 
+#'                   right = 1, 
+#'                   size.font = 2.0, 
+#'                   wtl = wtl)
 #' 
 #' 
 win.tie.loss.plot <- function(data, names.methods, 
@@ -239,40 +267,40 @@ win.tie.loss.plot <- function(data, names.methods,
                               size.font, wtl) {
   
   # Calculate the sum of win, tie, and loss for each method
-  soma = apply(data[,-1], 1, sum)
-  #max.value = soma[1]
-  half.value = soma[1] / 2
-  max.value = max.value
+  soma <- apply(data[,-1], 1, sum)  # Sum across rows, ignoring the first column
+  half.value <- soma[1] / 2          # Calculate half of the first row's sum
+  max.value <- max.value              # Ensure max.value is set
   
   # Transpose the data frame for plotting
-  res = data.frame(t(data))
-  colnames(res) = names.methods
-  res = res[-1, ]
+  res <- data.frame(t(data))
+  colnames(res) <- names.methods       # Set column names to method names
+  res <- res[-1, ]                     # Remove the first row (which contains the original column names)
   
   # Create the barplot and save it as a PDF
   pdf(name.file, width, height)
-  par(mar=c(bottom, left, top, right))
-  colors = c("#00CCFF", "#009900", "#990066")
+  par(mar=c(bottom, left, top, right))  # Set margins
+  colors <- c("#00CCFF", "#009900", "#990066")  # Define colors for bars
   barplot(
     as.matrix(res),
     col = colors,
     horiz = TRUE,
     names.arg = names.methods,
-    las = 1,
-    border = "#888888",
-    xlim = c(0, (max.value)),
-    cex.names = size.font,
-    cex.axis = size.font,
-    axisnames = TRUE
+    las = 1,  # Horizontal labels
+    border = "#888888",  # Border color for bars
+    xlim = c(0, max.value),  # Set x-axis limit
+    cex.names = size.font,  # Control font size for names
+    cex.axis = size.font,    # Control font size for axis
+    axisnames = TRUE         # Show axis names
   )
   
-  # Add reference lines
+  # Add reference line at half value
   abline(v = half.value, col = "white")
-  #abline(v = 115, col = "white")
   
   # Add a legend
   legend("right", wtl, cex = size.font, fill = colors)
-  dev.off()
+  
+  dev.off()  # Close the PDF device
 }
+
 
 

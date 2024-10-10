@@ -218,7 +218,14 @@
 </h3>
 <p>To compute the win-tie-loss, load your data and call the function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">name.file</span> <span class="op">=</span> <span class="st">"~/WinTieLoss/Data/clp.csv"</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">FolderRoot</span> <span class="op">=</span> <span class="st">"~/pathToYourRootFolder"</span></span>
+<span><span class="va">FolderData</span> <span class="op">=</span> <span class="st">"~/pathToYourDataFolder"</span></span>
+<span><span class="va">FolderResults</span> <span class="op">=</span> <span class="st">"~/pathToYourResultsFolder"</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">WinTieLoss</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">name.file</span> <span class="op">=</span> <span class="st">"~/WinTieLoss/Data/clp.csv"</span></span>
 <span><span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">name.file</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">methods.names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
@@ -227,7 +234,12 @@
 <span><span class="va">filtered_res.mes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">df_res.mes</span>, <span class="va">names</span> <span class="op">==</span> <span class="st">"clp"</span><span class="op">)</span></span>
 <span><span class="va">measure.type</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">filtered_res.mes</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="reference/win.tie.loss.compute.html">win.tie.loss.compute</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="reference/win.tie.loss.compute.html">win.tie.loss.compute</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, <span class="va">measure.type</span><span class="op">)</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">method</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span>, levels <span class="op">=</span> <span class="va">methods.names</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.csv"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">res</span>, <span class="va">save</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>data</code></strong>: Your dataset in CSV format, read into a DataFrame.</li>
@@ -247,11 +259,11 @@
 </h3>
 <p>Generate a bar plot to visualize your win-tie-loss comparison:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">method</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span>, levels <span class="op">=</span> <span class="va">methods.names</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">method</span><span class="op">)</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.csv"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">res</span>, <span class="va">save</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Calculate the sum of win, tie, and loss for each method</span></span>
+<span><span class="va">soma</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span></span>
+<span><span class="va">max.value</span> <span class="op">=</span> <span class="va">soma</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">half.value</span> <span class="op">=</span> <span class="va">soma</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span></span>
 <span><span class="va">wtl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"win"</span>, <span class="st">"tie"</span>, <span class="st">"loss"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">=</span> <span class="va">wtl</span> </span>
@@ -259,7 +271,8 @@
 <span><span class="va">save</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">FolderResults</span>, <span class="st">"/clp.pdf"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/win.tie.loss.plot.html">win.tie.loss.plot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res</span>, </span>
 <span>                  names.methods <span class="op">=</span> <span class="va">methods.names</span>, </span>
-<span>                  name.file <span class="op">=</span> <span class="va">save</span>, </span>
+<span>                  name.file <span class="op">=</span> <span class="va">save</span>,</span>
+<span>                  max.value <span class="op">=</span> <span class="va">max.value</span>,</span>
 <span>                  width <span class="op">=</span> <span class="fl">18</span>, </span>
 <span>                  height <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>                  bottom <span class="op">=</span> <span class="fl">2</span>, </span>
@@ -275,6 +288,9 @@
 <strong><code>names.methods</code></strong>: A vector of method names to label your plot.</li>
 <li>
 <strong><code>name.file</code></strong>: The path and file name to save the plot as a PDF.</li>
+<li>
+<strong><code>max.value</code></strong>: Pay attention to MAX.VALUE. The legend may be on top of the graph if max.value is exact.</li>
+<li>Therefore, pass a slightly higher value, so the legend will be a little further in front of the graph.</li>
 <li>
 <strong><code>width</code>, <code>height</code></strong>: Dimensions of the PDF.</li>
 <li>

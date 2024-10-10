@@ -60,7 +60,12 @@ FolderResults = "~/WinTieLoss/Results"
 #source("win-tie-loss.R")
 #source("analysis.R")
 
+
+library(stringr)
+library(dplyr)
+
 library(WinTieLoss)
+
 
 
 ##############################
@@ -156,6 +161,7 @@ while(i<=length(full_paths)){
   save = paste(FolderResults, "/", file_names[i], ".pdf", sep="")
   win.tie.loss.plot(data = res, 
                     names.methods = methods.names, 
+                    max.value = 600,
                     name.file = save, 
                     width = 30, 
                     height = 40, 
@@ -166,7 +172,7 @@ while(i<=length(full_paths)){
                     size.font = 5.0,
                     wtl = wtl)
   
-  # in the plot.win.tie.loss there is one arameterthat you
+  # in the plot.win.tie.loss there is one parameter that you
   # can change if the image is not fitting well the pdf
   # xlim = c(0, (max.value))
   # add somevalue into max.value and the plot will  fit
