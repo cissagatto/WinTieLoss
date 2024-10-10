@@ -240,7 +240,7 @@ win.tie.loss.plot <- function(data, names.methods,
   
   # Calculate the sum of win, tie, and loss for each method
   soma = apply(data[,-1], 1, sum)
-  max.value = soma[1]
+  #max.value = soma[1]
   half.value = soma[1] / 2
   max.value = max.value
   
