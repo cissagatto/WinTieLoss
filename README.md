@@ -133,13 +133,22 @@ write.csv(res, save, row.names = FALSE)
 Generate a bar plot to visualize your win-tie-loss comparison:
 
 ```r
+
+# Calculate the sum of win, tie, and loss for each method
+soma = apply(data[,-1], 1, sum)
+max.value = soma[1]
+half.value = soma[1] / 2
+
 wtl = c("win", "tie", "loss")
 colnames(res) = wtl 
-
 save = paste(FolderResults, "/clp.pdf", sep="")
+
+# Pay attention to MAX.VALUE. The legend may be on top of the graph if max.value is exact.
+# Therefore, pass a slightly higher value, so the legend will be a little further in front of the graph.
 win.tie.loss.plot(data = res, 
                   names.methods = methods.names, 
-                  name.file = save, 
+                  name.file = save,
+                  max.value = max.value,
                   width = 18, 
                   height = 10, 
                   bottom = 2, 
