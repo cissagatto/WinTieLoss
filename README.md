@@ -141,10 +141,8 @@ half.value = soma[1] / 2
 
 wtl = c("win", "tie", "loss")
 colnames(res) = wtl 
-save = paste(FolderResults, "/clp.pdf", sep="")
 
-# Pay attention to MAX.VALUE. The legend may be on top of the graph if max.value is exact.
-# Therefore, pass a slightly higher value, so the legend will be a little further in front of the graph.
+save = paste(FolderResults, "/clp.pdf", sep="")
 win.tie.loss.plot(data = res, 
                   names.methods = methods.names, 
                   name.file = save,
@@ -162,6 +160,8 @@ win.tie.loss.plot(data = res,
 - **`data`**: The result from `win.tie.loss.compute`.
 - **`names.methods`**: A vector of method names to label your plot.
 - **`name.file`**: The path and file name to save the plot as a PDF.
+- **`max.value`**: Pay attention to MAX.VALUE. The legend may be on top of the graph if max.value is exact.
+- Therefore, pass a slightly higher value, so the legend will be a little further in front of the graph.
 - **`width`, `height`**: Dimensions of the PDF.
 - **`bottom`, `left`, `top`, `right`**: Margins for the plot.
 - **`size.font`**: Font size for the plot labels.
