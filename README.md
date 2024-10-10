@@ -98,6 +98,13 @@ Save your CSV file in the `Data` folder or specify a custom path when calling th
 To compute the win-tie-loss, load your data and call the function.
 
 ```r
+
+FolderRoot = "~/pathToYourRootFolder"
+FolderData = "~/pathToYourDataFolder"
+FolderResults = "~/pathToYourResultsFolder"
+
+library(WinTieLoss)
+
 name.file = "~/WinTieLoss/Data/clp.csv"
 data = data.frame(read.csv(name.file))
 data = data[,-1]
@@ -108,6 +115,11 @@ filtered_res.mes <- filter(df_res.mes, names == "clp")
 measure.type = as.numeric(filtered_res.mes$type)
 
 res = win.tie.loss.compute(data = data, measure.type)
+res$method <- factor(res$method, levels = methods.names)
+res <- res[order(res$method), ]
+
+save = paste(FolderResults, "/clp.csv", sep="")
+write.csv(res, save, row.names = FALSE)
 
 ```
 
@@ -121,12 +133,6 @@ res = win.tie.loss.compute(data = data, measure.type)
 Generate a bar plot to visualize your win-tie-loss comparison:
 
 ```r
-res$method <- factor(res$method, levels = methods.names)
-res <- res[order(res$method), ]
-
-save = paste(FolderResults, "/clp.csv", sep="")
-write.csv(res, save, row.names = FALSE)
-
 wtl = c("win", "tie", "loss")
 colnames(res) = wtl 
 
@@ -154,10 +160,8 @@ win.tie.loss.plot(data = res,
 
 ### Semi-automated Analysis
 
-If you wish, there are also functions to help you analyze the results. 
-For example, if you compared 30 models using 50 datasets, it may be difficult 
-to interpret the results. See the functions in the analyis.R script, 
-they were written to perform some calculations. There are examples of how 
+If you wish, there are also functions to help you analyze the results. For example, if you compared 30 models using 50 datasets, it may be difficult 
+to interpret the results. See the functions in the analyis.R script, they were written to perform some calculations. There are examples of how 
 to use them in the example.R file, in the example folder.
 
 ### Documentation
