@@ -232,7 +232,8 @@ win.tie.loss.compute <- function(data, measure.type) {
 #'                   size.font = 2.0,wtl = wtl)
 #' 
 #' 
-win.tie.loss.plot <- function(data, names.methods, name.file, 
+win.tie.loss.plot <- function(data, names.methods, 
+                              name.file, max.value,
                               width, height, bottom, 
                               left, top, right, 
                               size.font, wtl) {
@@ -241,7 +242,7 @@ win.tie.loss.plot <- function(data, names.methods, name.file,
   soma = apply(data[,-1], 1, sum)
   max.value = soma[1]
   half.value = soma[1] / 2
-  max.value = 550
+  max.value = max.value
   
   # Transpose the data frame for plotting
   res = data.frame(t(data))
