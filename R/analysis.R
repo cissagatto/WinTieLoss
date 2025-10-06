@@ -195,9 +195,10 @@ calculate.max.min <- function(res) {
 #' \item{Value}{The maximum or minimum value for the respective category.}
 #' 
 #' @examples
+#' \dontrun{
 #' # Example usage
 #' result <- process_max_min("path/to/your/data.csv", "clp")
-#' print(result)
+#' }
 #' 
 #' @export
 process_max_min <- function(file, measure) {

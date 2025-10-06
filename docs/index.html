@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="A package for multi-label win-tie-loss computation">
-<meta property="og:description" content="Compute the total wind, tie, and loss">
+<meta property="og:description" content="Computes the total wins, ties, and losses among multiple methods for various performance measures.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -173,7 +173,7 @@
 </h3>
 <p>Prepare your dataset in a CSV format. The CSV should have the following structure:</p>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>datasets</th>
 <th>method 1</th>
 <th>method 2</th>
@@ -181,28 +181,28 @@
 <th>method M</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>dataset 1</td>
 <td>0.85</td>
 <td>0.80</td>
 <td>…</td>
 <td>0.90</td>
 </tr>
-<tr class="even">
+<tr>
 <td>dataset 2</td>
 <td>0.88</td>
 <td>0.82</td>
 <td>…</td>
 <td>0.89</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>…</td>
 <td>…</td>
 <td>…</td>
 <td>…</td>
 <td>…</td>
 </tr>
-<tr class="even">
+<tr>
 <td>dataset D</td>
 <td>0.90</td>
 <td>0.85</td>
@@ -212,6 +212,7 @@
 </tbody>
 </table>
 <p>Save your CSV file in the <code>Data</code> folder or specify a custom path when calling the functions.</p>
+<p><em>NOTE:</em> The CSV files saved in the FolderResults must have names that exactly match the metrics defined in the <em>wtl.measures()</em> function. If the names do not match, the <em>win.tie.loss.compute</em> function may not work correctly.</p>
 </div>
 <div class="section level3">
 <h3 id="step-2-compute-win-tie-loss">Step 2: Compute Win-Tie-Loss<a class="anchor" aria-label="anchor" href="#step-2-compute-win-tie-loss"></a>
@@ -225,7 +226,7 @@
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">WinTieLoss</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">name.file</span> <span class="op">=</span> <span class="st">"~/WinTieLoss/Data/clp.csv"</span></span>
+<span><span class="va">name.file</span> <span class="op">=</span> <span class="st">"~/WinTieLoss/Data/random-data.csv"</span></span>
 <span><span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">name.file</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">methods.names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
@@ -326,8 +327,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="id_-contributing">📚 <strong>Contributing</strong>
-<a class="anchor" aria-label="anchor" href="#id_-contributing"></a>
+<h2 id="books-contributing">📚 <strong>Contributing</strong>
+<a class="anchor" aria-label="anchor" href="#books-contributing"></a>
 </h2>
 <p>We welcome contributions from the community! If you have suggestions, improvements, or bug fixes, please submit a pull request or open an issue in the GitHub repository.</p>
 </div>
@@ -341,8 +342,8 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="id_-contact">📧 <strong>Contact</strong>
-<a class="anchor" aria-label="anchor" href="#id_-contact"></a>
+<h2 id="e-mail-contact">📧 <strong>Contact</strong>
+<a class="anchor" aria-label="anchor" href="#e-mail-contact"></a>
 </h2>
 <p>For any questions or support, please contact: - <strong>Prof. Elaine Cecilia Gatto</strong> (<a href="mailto:elainececiliagatto@gmail.com" class="email">elainececiliagatto@gmail.com</a>)</p>
 </div>
@@ -377,7 +378,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Prof. Elaine Cecilia Gatto <br><small class="roles"> Maintainer </small>  </li>
+<li>Prof. Elaine Cecilia Gatto <br><small class="roles"> Maintainer </small>   </li>
 </ul>
 </div>
 
@@ -394,7 +395,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer>

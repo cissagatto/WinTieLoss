@@ -46,12 +46,19 @@ FolderRoot = "~/WinTieLoss"
 FolderScripts = "~/WinTieLoss/R"
 
 
-
 #' Generate a Random Data Frame
 #'
 #' This function generates a random data frame with a predefined number of rows 
 #' and columns, simulating different methods and datasets. The resulting data 
 #' frame is saved as a CSV file.
+#'
+#' @import dplyr
+#' @import purrr
+#' @import tibble
+#' @importFrom stats filter runif
+#' @importFrom utils read.csv write.csv install.packages
+#' @importFrom grDevices pdf dev.off
+#' @importFrom graphics abline barplot legend par
 #'
 #' @return A data frame with random values.
 #' @export
@@ -85,181 +92,213 @@ random.dataframe <- function(){
 }
 
 
-#' Compute Win-Tie-Loss Summary
+#' Compute Win-Tie-Loss Summary for Methods
 #'
-#' This function calculates the win, tie, and loss summary between pairs of 
+#' This function calculates the win, tie, and loss summary between all pairs of 
 #' methods based on their scores for a given measure type. 
+#' 
+#' For each pair of methods, it compares their scores:
+#' - If `measure.type = 1`: higher scores are considered better (win if method1 > method2)
+#' - If `measure.type = 0`: lower scores are considered better (win if method1 < method2)
 #'
-#' @param data A data frame containing the scores of different methods.
-#' @param measure.type An integer indicating the measure type (1 or 2) which 
-#'   defines the win/loss criteria.
+#' @param data A data frame containing the scores of different methods (columns are methods, rows are observations). 
+#'   NA values are replaced by 0.
+#' @param measure.type An integer indicating the measure type:
+#'   \itemize{
+#'     \item \code{1}: Higher scores are better.
+#'     \item \code{0}: Lower scores are better.
+#'   }
 #'
 #' @return A data frame summarizing the number of wins, ties, and losses for each method.
-#' @export
+#'   The returned data frame has columns:
+#'   \itemize{
+#'     \item \code{method}: Method name.
+#'     \item \code{win}: Total number of wins for this method.
+#'     \item \code{tie}: Total number of ties for this method.
+#'     \item \code{loss}: Total number of losses for this method.
+#'   }
+#'
+#' @import dplyr
+#' @import purrr
+#' @import tibble
+#' @importFrom utils write.csv read.csv
 #'
 #' @examples
-#' name.file = "~/WinTieLoss/Data/clp.csv"
+#' \dontrun{
+#' # Load example data
+#' name.file = "~/WinTieLoss/Data/random-data.csv"
 #' data = data.frame(read.csv(name.file))
-#' data = data[,-1]
+#' data = data[,-1]  # Remove first column if needed
 #' methods.names = colnames(data)
 #'
+#' # Load metric types
 #' df_res.mes <- wtl.measures()
-#' filtered_res.mes <- filter(df_res.mes, names == "clp")
+#' filtered_res.mes <- dplyr::filter(df_res.mes, names == "clp")
 #' measure.type = as.numeric(filtered_res.mes$type)
 #' 
-#' res = win.tie.loss.compute(data = data, measure.type)
-#' res$method <- factor(res$method, levels = methods.names)
-#' res <- res[order(res$method), ]
-#' 
-#' save = paste(FolderResults, "/clp.csv", sep="")
-#' write.csv(res, save, row.names = FALSE)
-#'
-#' wtl = c("win", "tie", "loss")
-#' colnames(res) = wtl 
-#' 
-#' save = paste(FolderResults, "/clp.pdf", sep="")
-#' win.tie.loss.plot(data = res, 
-#'                   names.methods = methods.names, 
-#'                   name.file = save, width = 18, height = 10, 
-#'                   bottom = 2, left = 11, top = 0, right = 1, 
-#'                   size.font = 2.0,wtl = wtl)
-#' 
-#' 
-win.tie.loss.compute <- function(data, measure.type) {
-  
-  # Replace NA values with 0
-  data[is.na(data)] <- 0
-  
-  # Create all possible combinations of column pairs
-  combinacoes <- expand.grid(col1 = colnames(data), col2 = colnames(data))
-  
-  # Apply a function to create data frames with results for each pair
-  final <- do.call(rbind, apply(combinacoes, 1, function(row) {
-    score.method.1 <- data[, row[1]]
-    score.method.2 <- data[, row[2]]
-    teste <- data.frame(
-      name.method.1 = row[1],
-      name.method.2 = row[2],
-      score.method.1 = score.method.1,
-      score.method.2 = score.method.2
-    )
-  }))
-  
-  # Reset row names
-  rownames(final) <- NULL
-  
-  # Filter out rows where the methods are the same
-  final.certo = data.frame(filter(final, !(final$name.method.1 == final$name.method.2)))
-  
-  # Calculate win, tie, and loss based on measure type
-  if(measure.type == 1){
-    resultado <- final.certo %>%
-      mutate(
-        win = if_else(score.method.1 > score.method.2, 1, 0),
-        tie = if_else(score.method.1 == score.method.2, 1, 0),
-        loss = if_else(score.method.1 < score.method.2, 1, 0)
-      )
-  } else {
-    resultado <- final.certo %>%
-      mutate(
-        win = if_else(score.method.1 < score.method.2, 1, 0),
-        tie = if_else(score.method.1 == score.method.2, 1, 0),
-        loss = if_else(score.method.1 > score.method.2, 1, 0)
-      )
-  }
-  
-  # Summarize results by method
-  res.final <- resultado %>%
-    group_by(name.method.1) %>%
-    dplyr::summarise(win = sum(win),
-                     tie = sum(tie),
-                     loss = sum(loss)) %>%
-    arrange(-win)
-  
-  # Rename the first column to "method"
-  names(res.final)[1] = "method"
-  res.final = data.frame(res.final)
-  
-  return(res.final)
-}
-
-
-#' Plot Win-Tie-Loss Barplot
-#'
-#' This function generates a barplot visualizing the win-tie-loss summary 
-#' for different methods. The resulting plot provides a clear graphical 
-#' representation of the performance of various methods in terms of wins, ties, 
-#' and losses. The plot is saved as a PDF file.
-#'
-#' @param data A data frame containing the win-tie-loss summary, where each row 
-#' corresponds to a method, and each column corresponds to the counts of wins, 
-#' ties, and losses.
-#' @param names.methods A vector of method names to be displayed along the 
-#' y-axis of the plot.
-#' @param name.file The name of the output PDF file, including the path where 
-#' the file will be saved.
-#' @param max.value A numeric value indicating the maximum limit for the x-axis. 
-#' This should correspond to the highest value of the win-tie-loss counts for 
-#' proper visualization.
-#' @param width The width of the plot in inches.
-#' @param height The height of the plot in inches.
-#' @param bottom Margin size (in lines) for the bottom of the plot.
-#' @param left Margin size (in lines) for the left of the plot.
-#' @param top Margin size (in lines) for the top of the plot.
-#' @param right Margin size (in lines) for the right of the plot.
-#' @param size.font Font size for labels, method names, and axis text.
-#' @param wtl A character vector indicating the labels for the respective 
-#' categories: wins, ties, and losses. Default is `c("win", "tie", "loss")`.
-#'
-#' @return A PDF file containing the win-tie-loss barplot saved at the specified 
-#' location. The plot includes a legend and reference lines to aid in 
-#' interpretation.
-#' 
-#' @export
-#'
-#' @examples 
-#' # Define the file path and read the data
-#' name.file <- "~/WinTieLoss/Data/clp.csv"
-#' data <- read.csv(name.file)
-#' data <- data[,-1]  # Remove the first column if not needed
-#' 
-#' # Get method names from the data frame
-#' methods.names <- colnames(data)
-#'
-#' # Calculate win-tie-loss measures
-#' df_res.mes <- wtl.measures()
-#' filtered_res.mes <- filter(df_res.mes, names == "clp")
-#' measure.type <- as.numeric(filtered_res.mes$type)
-#' 
-#' # Compute win-tie-loss summary
-#' res <- win.tie.loss.compute(data = data, measure.type)
+#' # Compute Win-Tie-Loss summary
+#' res = win.tie.loss.compute(data = data, measure.type = measure.type)
 #' res$method <- factor(res$method, levels = methods.names)
 #' res <- res[order(res$method), ]
 #' 
 #' # Save results to CSV
-#' save <- paste(FolderResults, "/clp.csv", sep="")
+#' FolderResults <- "~/WinTieLoss/Results"
+#' save = paste(FolderResults, "/clp.csv", sep = "")
 #' write.csv(res, save, row.names = FALSE)
 #'
-#' # Define win-tie-loss labels
+#' # Plot results (optional)
+#' wtl = c("win", "tie", "loss")
+#' colnames(res) = wtl 
+#' save = paste(FolderResults, "/clp.pdf", sep = "")
+#' win.tie.loss.plot(
+#'   data = res, 
+#'   names.methods = methods.names, 
+#'   name.file = save, 
+#'   width = 18, height = 10, 
+#'   bottom = 2, left = 11, top = 0, right = 1, 
+#'   size.font = 2.0, wtl = wtl
+#' )
+#' }
+#'
+#' @export
+win.tie.loss.compute <- function(data, measure.type) {
+  
+  # Replace NA values with 0
+  data[is.na(data)] <- 0
+  rownames(data) <- NULL
+  
+  # Create all possible combinations of columns (pairs of methods)
+  combinations <- crossing(
+    name.method.1 = colnames(data),
+    name.method.2 = colnames(data)
+  ) %>%
+    filter(name.method.1 != name.method.2)  # Exclude comparisons of the same method
+  
+  # Compute win/tie/loss in a vectorized manner
+  res <- map_dfr(1:nrow(combinations), function(i) {
+    m1 <- combinations$name.method.1[i]
+    m2 <- combinations$name.method.2[i]
+    
+    s1 <- data[[m1]]
+    s2 <- data[[m2]]
+    
+    if (measure.type == 1) {
+      # Higher scores are better
+      tibble(
+        name.method.1 = m1,
+        win  = sum(s1 > s2),
+        tie  = sum(s1 == s2),
+        loss = sum(s1 < s2)
+      )
+    } else {
+      # Lower scores are better
+      tibble(
+        name.method.1 = m1,
+        win  = sum(s1 < s2),
+        tie  = sum(s1 == s2),
+        loss = sum(s1 > s2)
+      )
+    }
+  })
+  
+  # Summarize results by method
+  res.final <- res %>%
+    group_by(name.method.1) %>%
+    summarise(
+      win = sum(win),
+      tie = sum(tie),
+      loss = sum(loss),
+      .groups = "drop"
+    ) %>%
+    rename(method = name.method.1) %>%
+    arrange(desc(win))
+  
+  return(as.data.frame(res.final))
+}
+
+
+
+#' Plot Win-Tie-Loss Barplot
+#'
+#' This function generates a barplot visualizing the Win-Tie-Loss summary 
+#' for different methods. The resulting plot provides a clear graphical 
+#' representation of each method’s performance in terms of wins, ties, 
+#' and losses. The plot is automatically saved as a PDF file.
+#'
+#' @param data A data frame containing the win-tie-loss summary, where each row 
+#' corresponds to a method, and each column corresponds to the counts of wins, 
+#' ties, and losses.
+#' @param names.methods A character vector of method names to be displayed along 
+#' the y-axis of the plot.
+#' @param name.file The name (including full path) of the output PDF file 
+#' where the plot will be saved.
+#' @param max.value A numeric value indicating the maximum limit for the x-axis. 
+#' This should correspond to the highest win-tie-loss value for proper scaling.
+#' @param width The width of the output PDF in inches.
+#' @param height The height of the output PDF in inches.
+#' @param bottom Bottom margin size (in lines) for the plot.
+#' @param left Left margin size (in lines) for the plot.
+#' @param top Top margin size (in lines) for the plot.
+#' @param right Right margin size (in lines) for the plot.
+#' @param size.font Font size for labels, method names, and axis text.
+#' @param wtl A character vector indicating the labels for the respective 
+#' categories: wins, ties, and losses. Default is \code{c("win", "tie", "loss")}.
+#'
+#' @return Invisibly returns the input data (for consistency), and saves 
+#' a PDF file containing the Win-Tie-Loss barplot at the specified location. 
+#' The plot includes a legend and reference lines for interpretation.
+#'
+#' @importFrom grDevices pdf dev.off
+#' @importFrom graphics barplot legend abline par text axis
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Define the file path and read the data
+#' name.file <- "~/WinTieLoss/Data/random-data.csv"
+#' data <- read.csv(name.file)
+#' data <- data[, -1]  # Remove the first column if not needed
+#' 
+#' # Get method names
+#' methods.names <- colnames(data)
+#'
+#' # Calculate Win-Tie-Loss measures
+#' df_res.mes <- wtl.measures()
+#' filtered_res.mes <- dplyr::filter(df_res.mes, names == "clp")
+#' measure.type <- as.numeric(filtered_res.mes$type)
+#' 
+#' # Compute Win-Tie-Loss summary
+#' res <- win.tie.loss.compute(data = data, measure.type)
+#' res$method <- factor(res$method, levels = methods.names)
+#' res <- res[order(res$method), ]
+#' 
+#' # Save summary to CSV
+#' FolderResults <- "~/WinTieLoss/Results"
+#' save.path <- paste0(FolderResults, "/clp.csv")
+#' write.csv(res, save.path, row.names = FALSE)
+#'
+#' # Define Win-Tie-Loss labels
 #' wtl <- c("win", "tie", "loss")
 #' colnames(res) <- wtl 
 #' 
 #' # Generate and save the barplot
-#' save <- paste(FolderResults, "/clp.pdf", sep="")
-#' win.tie.loss.plot(data = res, 
-#'                   names.methods = methods.names, 
-#'                   name.file = save, 
-#'                   max.value = 600,  # Set the maximum x-axis value
-#'                   width = 18, 
-#'                   height = 10, 
-#'                   bottom = 2, 
-#'                   left = 11, 
-#'                   top = 0, 
-#'                   right = 1, 
-#'                   size.font = 2.0, 
-#'                   wtl = wtl)
-#' 
-#' 
+#' pdf.path <- paste0(FolderResults, "/clp.pdf")
+#' win.tie.loss.plot(
+#'   data = res,
+#'   names.methods = methods.names,
+#'   name.file = pdf.path,
+#'   max.value = 600,
+#'   width = 18,
+#'   height = 10,
+#'   bottom = 2,
+#'   left = 11,
+#'   top = 0,
+#'   right = 1,
+#'   size.font = 2.0,
+#'   wtl = wtl
+#' )
+#' }
 win.tie.loss.plot <- function(data, names.methods, 
                               name.file, max.value,
                               width, height, bottom, 

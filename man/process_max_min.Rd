@@ -27,8 +27,9 @@ categorizes the data into different method types, and calculates the maximum and
 minimum values for wins, ties, and losses for each category.
 }
 \examples{
+\dontrun{
 # Example usage
 result <- process_max_min("path/to/your/data.csv", "clp")
-print(result)
+}
 
 }

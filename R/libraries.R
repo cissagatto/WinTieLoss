@@ -44,20 +44,33 @@ FolderRoot = "~/WinTieLoss"
 FolderScripts = "~/WinTieLoss/R"
 
 
-if (!require("devtools")) {
-    install.packages("devtools")
+# Function to install CRAN packages if missing, then load
+install_and_load <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, dependencies = TRUE)
+    library(pkg, character.only = TRUE)
+  }
 }
-devtools::install_github("b0rxa/scmamp")
 
+# CRAN packages
+cran_packages <- c("devtools", "stringr", "dplyr", 
+                   "tidyr", "readr", "writexl", 
+                   "openxlsx", "purrr")
 
+# Install and load CRAN packages
+lapply(cran_packages, install_and_load)
 
-library(stringr)
-library(scmamp)
-library(dplyr)
-library(readr)
-library(writexl)
-library(openxlsx)
-library(writexl)
+# GitHub packages: list as named vector "package_name" = "github_repo"
+github_packages <- c("scmamp" = "b0rxa/scmamp")
+
+# Install and load GitHub packages
+for (pkg in names(github_packages)) {
+  if (!require(pkg, character.only = TRUE)) {
+    devtools::install_github(github_packages[pkg])
+    library(pkg, character.only = TRUE)
+  }
+}
+
 
 
 

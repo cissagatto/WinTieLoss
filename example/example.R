@@ -61,9 +61,8 @@ FolderResults = "~/WinTieLoss/Results"
 #source("analysis.R")
 
 
-library(stringr)
-library(dplyr)
-
+#library(stringr)
+#library(dplyr)
 library(WinTieLoss)
 
 
@@ -72,30 +71,34 @@ library(WinTieLoss)
 # to one csv file
 ##############################
 
-name.file = "~/WinTieLoss/Data/clp.csv"
+name.file = "~/WinTieLoss/Data/random-data.csv"
 data = data.frame(read.csv(name.file))
 data = data[,-1]
 methods.names = colnames(data)
 
 df_res.mes <- wtl.measures()
-filtered_res.mes <- filter(df_res.mes, names == "clp")
+filtered_res.mes <- filter(df_res.mes, names == "auprc_macro")
 measure.type = as.numeric(filtered_res.mes$type)
-
 
 res = win.tie.loss.compute(data = data, measure.type)
 res$method <- factor(res$method, levels = methods.names)
 res <- res[order(res$method), ]
 
-save = paste(FolderResults, "/clp.csv", sep="")
+save = paste(FolderResults, "/random_auprc_macro.csv", sep="")
 write.csv(res, save, row.names = FALSE)
 
 wtl = c("win", "tie", "loss")
 colnames(res) = wtl 
 
-save = paste(FolderResults, "/clp.pdf", sep="")
+soma = apply(res[,-1], 1, sum)
+max.value = 100
+half.value = soma/2
+
+save = paste(FolderResults, "/random_auprc_macro.pdf", sep="")
 win.tie.loss.plot(data = res, 
                   names.methods = methods.names, 
                   name.file = save, 
+                  max.value = max.value,
                   width = 18, 
                   height = 10, 
                   bottom = 2, 
@@ -111,6 +114,11 @@ win.tie.loss.plot(data = res,
 ##############################
 # to many csv files
 ##############################
+
+# NOTE:
+# The CSV files saved in the FolderResults must have names that exactly match
+# the metrics defined in the wtl.measures() function.
+# If the names do not match, the win.tie.loss.compute function may not work correctly.
 
 setwd(FolderData)
 current_dir <- getwd()

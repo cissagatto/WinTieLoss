@@ -2,49 +2,74 @@
 % Please edit documentation in R/win-tie-loss.R
 \name{win.tie.loss.compute}
 \alias{win.tie.loss.compute}
-\title{Compute Win-Tie-Loss Summary}
+\title{Compute Win-Tie-Loss Summary for Methods}
 \usage{
 win.tie.loss.compute(data, measure.type)
 }
 \arguments{
-\item{data}{A data frame containing the scores of different methods.}
+\item{data}{A data frame containing the scores of different methods (columns are methods, rows are observations). 
+NA values are replaced by 0.}
 
-\item{measure.type}{An integer indicating the measure type (1 or 2) which 
-defines the win/loss criteria.}
+\item{measure.type}{An integer indicating the measure type:
+\itemize{
+  \item \code{1}: Higher scores are better.
+  \item \code{0}: Lower scores are better.
+}}
 }
 \value{
 A data frame summarizing the number of wins, ties, and losses for each method.
+  The returned data frame has columns:
+  \itemize{
+    \item \code{method}: Method name.
+    \item \code{win}: Total number of wins for this method.
+    \item \code{tie}: Total number of ties for this method.
+    \item \code{loss}: Total number of losses for this method.
+  }
 }
 \description{
-This function calculates the win, tie, and loss summary between pairs of 
+This function calculates the win, tie, and loss summary between all pairs of 
 methods based on their scores for a given measure type.
 }
+\details{
+For each pair of methods, it compares their scores:
+- If `measure.type = 1`: higher scores are considered better (win if method1 > method2)
+- If `measure.type = 0`: lower scores are considered better (win if method1 < method2)
+}
 \examples{
-name.file = "~/WinTieLoss/Data/clp.csv"
+\dontrun{
+# Load example data
+name.file = "~/WinTieLoss/Data/random-data.csv"
 data = data.frame(read.csv(name.file))
-data = data[,-1]
+data = data[,-1]  # Remove first column if needed
 methods.names = colnames(data)
 
+# Load metric types
 df_res.mes <- wtl.measures()
-filtered_res.mes <- filter(df_res.mes, names == "clp")
+filtered_res.mes <- dplyr::filter(df_res.mes, names == "clp")
 measure.type = as.numeric(filtered_res.mes$type)
 
-res = win.tie.loss.compute(data = data, measure.type)
+# Compute Win-Tie-Loss summary
+res = win.tie.loss.compute(data = data, measure.type = measure.type)
 res$method <- factor(res$method, levels = methods.names)
 res <- res[order(res$method), ]
 
-save = paste(FolderResults, "/clp.csv", sep="")
+# Save results to CSV
+FolderResults <- "~/WinTieLoss/Results"
+save = paste(FolderResults, "/clp.csv", sep = "")
 write.csv(res, save, row.names = FALSE)
 
+# Plot results (optional)
 wtl = c("win", "tie", "loss")
 colnames(res) = wtl 
-
-save = paste(FolderResults, "/clp.pdf", sep="")
-win.tie.loss.plot(data = res, 
-                  names.methods = methods.names, 
-                  name.file = save, width = 18, height = 10, 
-                  bottom = 2, left = 11, top = 0, right = 1, 
-                  size.font = 2.0,wtl = wtl)
-
+save = paste(FolderResults, "/clp.pdf", sep = "")
+win.tie.loss.plot(
+  data = res, 
+  names.methods = methods.names, 
+  name.file = save, 
+  width = 18, height = 10, 
+  bottom = 2, left = 11, top = 0, right = 1, 
+  size.font = 2.0, wtl = wtl
+)
+}
 
 }

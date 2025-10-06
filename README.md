@@ -93,6 +93,8 @@ Prepare your dataset in a CSV format. The CSV should have the following structur
 
 Save your CSV file in the `Data` folder or specify a custom path when calling the functions.
 
+*NOTE:* The CSV files saved in the FolderResults must have names that exactly match the metrics defined in the *wtl.measures()* function. If the names do not match, the *win.tie.loss.compute* function may not work correctly.
+
 ### Step 2: Compute Win-Tie-Loss
 
 To compute the win-tie-loss, load your data and call the function.
@@ -105,7 +107,7 @@ FolderResults = "~/pathToYourResultsFolder"
 
 library(WinTieLoss)
 
-name.file = "~/WinTieLoss/Data/clp.csv"
+name.file = "~/WinTieLoss/Data/random-data.csv"
 data = data.frame(read.csv(name.file))
 data = data[,-1]
 methods.names = colnames(data)
