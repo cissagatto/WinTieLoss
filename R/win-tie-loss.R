@@ -168,7 +168,7 @@ win.tie.loss.compute <- function(data, measure.type) {
   rownames(data) <- NULL
   
   # Create all possible combinations of columns (pairs of methods)
-  combinations <- crossing(
+  combinations <- tidyr::crossing(
     name.method.1 = colnames(data),
     name.method.2 = colnames(data)
   ) %>%
