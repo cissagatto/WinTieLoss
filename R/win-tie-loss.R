@@ -161,59 +161,71 @@ random.dataframe <- function(){
 #' }
 #'
 #' @export
-win.tie.loss.compute <- function(data, measure.type) {
+win.tie.loss.compute <- function(data, measure.type) { 
   
   # Replace NA values with 0
   data[is.na(data)] <- 0
-  rownames(data) <- NULL
   
-  # Create all possible combinations of columns (pairs of methods)
-  combinations <- tidyr::crossing(
-    name.method.1 = colnames(data),
-    name.method.2 = colnames(data)
-  ) %>%
-    filter(name.method.1 != name.method.2)  # Exclude comparisons of the same method
+  # Create all possible combinations of column pairs
+  combinacoes <- expand.grid(
+    col1 = colnames(data),
+    col2 = colnames(data)
+  )
   
-  # Compute win/tie/loss in a vectorized manner
-  res <- map_dfr(1:nrow(combinations), function(i) {
-    m1 <- combinations$name.method.1[i]
-    m2 <- combinations$name.method.2[i]
+  # Apply a function to create data frames with results for each pair
+  final <- do.call(rbind, apply(combinacoes, 1, function(row) {
+    score.method.1 <- data[, row[1]]
+    score.method.2 <- data[, row[2]]
     
-    s1 <- data[[m1]]
-    s2 <- data[[m2]]
-    
-    if (measure.type == 1) {
-      # Higher scores are better
-      tibble(
-        name.method.1 = m1,
-        win  = sum(s1 > s2),
-        tie  = sum(s1 == s2),
-        loss = sum(s1 < s2)
+    teste <- data.frame(
+      name.method.1 = row[1],
+      name.method.2 = row[2],
+      score.method.1 = score.method.1,
+      score.method.2 = score.method.2
+    )
+  }))
+  
+  # Reset row names
+  rownames(final) <- NULL
+  
+  # Filter out rows where the methods are the same
+  final.certo <- data.frame(
+    filter(final, !(final$name.method.1 == final$name.method.2))
+  )
+  
+  # Calculate win, tie, and loss based on measure type
+  if (measure.type == 1) {
+    resultado <- final.certo %>%
+      mutate(
+        win  = if_else(score.method.1 > score.method.2, 1, 0),
+        tie  = if_else(score.method.1 == score.method.2, 1, 0),
+        loss = if_else(score.method.1 < score.method.2, 1, 0)
       )
-    } else {
-      # Lower scores are better
-      tibble(
-        name.method.1 = m1,
-        win  = sum(s1 < s2),
-        tie  = sum(s1 == s2),
-        loss = sum(s1 > s2)
+  } else {
+    resultado <- final.certo %>%
+      mutate(
+        win  = if_else(score.method.1 < score.method.2, 1, 0),
+        tie  = if_else(score.method.1 == score.method.2, 1, 0),
+        loss = if_else(score.method.1 > score.method.2, 1, 0)
       )
-    }
-  })
+  }
   
   # Summarize results by method
-  res.final <- res %>%
+  res.final <- resultado %>%
     group_by(name.method.1) %>%
-    summarise(
-      win = sum(win),
-      tie = sum(tie),
-      loss = sum(loss),
-      .groups = "drop"
+    dplyr::summarise(
+      win  = sum(win),
+      tie  = sum(tie),
+      loss = sum(loss)
     ) %>%
-    rename(method = name.method.1) %>%
-    arrange(desc(win))
+    arrange(-win)
   
-  return(as.data.frame(res.final))
+  # Rename the first column to "method"
+  names(res.final)[1] <- "method"
+  
+  res.final <- data.frame(res.final)
+  
+  return(res.final)
 }
 
 
