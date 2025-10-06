@@ -8,11 +8,11 @@ wtl.measures()
 }
 \value{
 A data frame with the following columns:
-  \itemize{
-    \item \code{names}: A character vector of metric names.
-    \item \code{type}: An integer vector representing the evaluation type of each metric.
-  }
-  The total number of metrics equals the length of the \code{names} vector.
+\itemize{
+\item \code{names}: A character vector of metric names.
+\item \code{type}: An integer vector representing the evaluation type of each metric.
+}
+The total number of metrics equals the length of the \code{names} vector.
 }
 \description{
 This function creates a data frame containing the names of evaluation metrics,
@@ -23,8 +23,8 @@ or lower value represents better performance.
 \details{
 The \code{type} vector categorizes metrics as follows:
 \itemize{
-  \item \code{1}: Metrics where a higher value indicates better performance.
-  \item \code{0}: Metrics where a lower value indicates better performance.
+\item \code{1}: Metrics where a higher value indicates better performance.
+\item \code{0}: Metrics where a lower value indicates better performance.
 }
 
 Below is a summary of the metrics and their evaluation types:

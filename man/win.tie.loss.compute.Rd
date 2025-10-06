@@ -2,74 +2,86 @@
 % Please edit documentation in R/win-tie-loss.R
 \name{win.tie.loss.compute}
 \alias{win.tie.loss.compute}
-\title{Compute Win-Tie-Loss Summary for Methods}
+\title{Compute Win–Tie–Loss Summary for Methods}
 \usage{
 win.tie.loss.compute(data, measure.type)
 }
 \arguments{
-\item{data}{A data frame containing the scores of different methods (columns are methods, rows are observations). 
-NA values are replaced by 0.}
-
-\item{measure.type}{An integer indicating the measure type:
+\item{data}{A \code{data.frame} containing the scores of different methods.
 \itemize{
-  \item \code{1}: Higher scores are better.
-  \item \code{0}: Lower scores are better.
+\item Columns represent methods.
+\item Rows represent datasets or experimental runs.
+\item NA values are replaced by 0.
+}}
+
+\item{measure.type}{An integer (0 or 1) indicating the direction of optimization:
+\itemize{
+\item \code{1} – higher scores are better (wins if method1 > method2)
+\item \code{0} – lower scores are better (wins if method1 < method2)
 }}
 }
 \value{
-A data frame summarizing the number of wins, ties, and losses for each method.
-  The returned data frame has columns:
-  \itemize{
-    \item \code{method}: Method name.
-    \item \code{win}: Total number of wins for this method.
-    \item \code{tie}: Total number of ties for this method.
-    \item \code{loss}: Total number of losses for this method.
-  }
+A \code{data.frame} summarizing the number of wins, ties, and losses per method.
+It has the following columns:
+\itemize{
+\item \code{method} – the method name.
+\item \code{win} – total number of pairwise wins.
+\item \code{tie} – total number of pairwise ties.
+\item \code{loss} – total number of pairwise losses.
+}
 }
 \description{
-This function calculates the win, tie, and loss summary between all pairs of 
-methods based on their scores for a given measure type.
+This function compares the performance of multiple methods across datasets by
+calculating the \strong{Win–Tie–Loss (WTL)} summary.
+It performs all pairwise comparisons between methods based on their scores,
+counting how many times each method wins, ties, or loses relative to the others.
+
+The function is useful in benchmarking and performance evaluation studies,
+where you want to summarize how often each method performs better or worse
+than the others according to a given metric (e.g., accuracy, RMSE, F1-score).
 }
 \details{
-For each pair of methods, it compares their scores:
-- If `measure.type = 1`: higher scores are considered better (win if method1 > method2)
-- If `measure.type = 0`: lower scores are considered better (win if method1 < method2)
+The function expects a data frame where:
+\itemize{
+\item Each \strong{column} corresponds to a method.
+\item Each \strong{row} corresponds to a dataset, experiment, or observation.
+}
+
+Pairwise comparisons are performed for every combination of methods.
+NA values are replaced with 0 before computation.
+
+If \code{measure.type = 1}, \strong{higher values are better} (e.g., accuracy).
+If \code{measure.type = 0}, \strong{lower values are better} (e.g., RMSE, error rate).
 }
 \examples{
 \dontrun{
-# Load example data
-name.file = "~/WinTieLoss/Data/random-data.csv"
-data = data.frame(read.csv(name.file))
-data = data[,-1]  # Remove first column if needed
-methods.names = colnames(data)
+#--------------------------------------------------------------
+# Example: Compute Win–Tie–Loss from random data
+#--------------------------------------------------------------
 
-# Load metric types
-df_res.mes <- wtl.measures()
-filtered_res.mes <- dplyr::filter(df_res.mes, names == "clp")
-measure.type = as.numeric(filtered_res.mes$type)
+# 1. Load example dataset
+data_path <- "~/WinTieLoss/Data/random-data.csv"
+data <- data.frame(read.csv(data_path))
+data <- data[, -1]  # Remove first column (dataset names)
 
-# Compute Win-Tie-Loss summary
-res = win.tie.loss.compute(data = data, measure.type = measure.type)
-res$method <- factor(res$method, levels = methods.names)
-res <- res[order(res$method), ]
+# 2. Define measure type
+# Suppose lower is better (e.g., clp)
+measure.type <- 0
 
-# Save results to CSV
-FolderResults <- "~/WinTieLoss/Results"
-save = paste(FolderResults, "/clp.csv", sep = "")
-write.csv(res, save, row.names = FALSE)
+# 3. Compute Win–Tie–Loss summary
+results <- win.tie.loss.compute(data = data, measure.type = measure.type)
 
-# Plot results (optional)
-wtl = c("win", "tie", "loss")
-colnames(res) = wtl 
-save = paste(FolderResults, "/clp.pdf", sep = "")
-win.tie.loss.plot(
-  data = res, 
-  names.methods = methods.names, 
-  name.file = save, 
-  width = 18, height = 10, 
-  bottom = 2, left = 11, top = 0, right = 1, 
-  size.font = 2.0, wtl = wtl
-)
+# 4. Sort by method
+methods.names <- colnames(data)
+results$method <- factor(results$method, levels = methods.names)
+results <- results[order(results$method), ]
+
+# 5. Print results
+print(results)
+
+# 6. Save to CSV
+output_path <- "~/WinTieLoss/Results/wtl-summary.csv"
+write.csv(results, output_path, row.names = FALSE)
 }
 
 }

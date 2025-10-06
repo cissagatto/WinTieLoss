@@ -9,10 +9,10 @@ calculate.max.min(res)
 \arguments{
 \item{res}{A data frame containing performance metrics. It must include the following columns:
 \itemize{
-  \item \code{method}: Names of the methods.
-  \item \code{win}: Count of wins for each method.
-  \item \code{tie}: Count of ties for each method.
-  \item \code{loss}: Count of losses for each method.
+\item \code{method}: Names of the methods.
+\item \code{win}: Count of wins for each method.
+\item \code{tie}: Count of ties for each method.
+\item \code{loss}: Count of losses for each method.
 }}
 }
 \value{

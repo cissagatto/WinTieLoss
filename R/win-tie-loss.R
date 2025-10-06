@@ -48,24 +48,54 @@ FolderScripts = "~/WinTieLoss/R"
 
 #' Generate a Random Data Frame
 #'
+#' @description
 #' This function generates a random data frame with a predefined number of rows 
-#' and columns, simulating different methods and datasets. The resulting data 
-#' frame is saved as a CSV file.
+#' and columns, simulating the results of different methods across multiple datasets.
+#' The generated data can be used for testing or demonstrating the Win–Tie–Loss
+#' computation and plotting functions.
 #'
-#' @import dplyr
-#' @import purrr
-#' @import tibble
-#' @importFrom stats filter runif
-#' @importFrom utils read.csv write.csv install.packages
-#' @importFrom grDevices pdf dev.off
-#' @importFrom graphics abline barplot legend par
+#' @details
+#' The function creates:
+#' - 20 datasets (rows)
+#' - 5 methods (columns)
+#' 
+#' Each cell contains a random value uniformly distributed between 0 and 1.
+#' The resulting data frame is also saved as a CSV file in the directory
+#' `~/WinTieLoss/Data/random-data.csv`.  
 #'
-#' @return A data frame with random values.
-#' @export
+#' This function is mainly designed for internal testing and examples within the
+#' WinTieLoss package.
+#'
+#' @return A `data.frame` containing the generated random values, with:
+#' \itemize{
+#'   \item `datasets` – dataset names (dataset1, dataset2, …)
+#'   \item `method1`, `method2`, … – random numeric values for each method
+#' }
+#'
+#' @importFrom stats runif
+#' @importFrom utils write.csv
 #'
 #' @examples
-#' rdf <- random.dataframe()
-#' rdf
+#' \dontrun{
+#' #--------------------------------------------------------------
+#' # Example: Generate random example data for testing
+#' #--------------------------------------------------------------
+#'
+#' # Generate and save random dataset
+#' df <- random.dataframe()
+#'
+#' # Display the first few rows
+#' head(df)
+#'
+#' # Path to saved file
+#' "~/WinTieLoss/Data/random-data.csv"
+#'
+#' # You can then use this file with:
+#' #   win.tie.loss.compute()
+#' #   win.tie.loss.plot()
+#' }
+#'
+#' @export
 random.dataframe <- function(){
   
   # Define the folder path where the CSV file will be saved
@@ -92,72 +122,81 @@ random.dataframe <- function(){
 }
 
 
-#' Compute Win-Tie-Loss Summary for Methods
+#' Compute Win–Tie–Loss Summary for Methods
 #'
-#' This function calculates the win, tie, and loss summary between all pairs of 
-#' methods based on their scores for a given measure type. 
-#' 
-#' For each pair of methods, it compares their scores:
-#' - If `measure.type = 1`: higher scores are considered better (win if method1 > method2)
-#' - If `measure.type = 0`: lower scores are considered better (win if method1 < method2)
+#' @description
+#' This function compares the performance of multiple methods across datasets by
+#' calculating the **Win–Tie–Loss (WTL)** summary.  
+#' It performs all pairwise comparisons between methods based on their scores,
+#' counting how many times each method wins, ties, or loses relative to the others.
 #'
-#' @param data A data frame containing the scores of different methods (columns are methods, rows are observations). 
-#'   NA values are replaced by 0.
-#' @param measure.type An integer indicating the measure type:
+#' The function is useful in benchmarking and performance evaluation studies,
+#' where you want to summarize how often each method performs better or worse
+#' than the others according to a given metric (e.g., accuracy, RMSE, F1-score).
+#'
+#' @details
+#' The function expects a data frame where:
+#' - Each **column** corresponds to a method.
+#' - Each **row** corresponds to a dataset, experiment, or observation.
+#'
+#' Pairwise comparisons are performed for every combination of methods.
+#' NA values are replaced with 0 before computation.
+#'
+#' If `measure.type = 1`, **higher values are better** (e.g., accuracy).  
+#' If `measure.type = 0`, **lower values are better** (e.g., RMSE, error rate).
+#'
+#' @param data A `data.frame` containing the scores of different methods.
+#'   - Columns represent methods.
+#'   - Rows represent datasets or experimental runs.
+#'   - NA values are replaced by 0.
+#'
+#' @param measure.type An integer (0 or 1) indicating the direction of optimization:
 #'   \itemize{
-#'     \item \code{1}: Higher scores are better.
-#'     \item \code{0}: Lower scores are better.
+#'     \item `1` – higher scores are better (wins if method1 > method2)
+#'     \item `0` – lower scores are better (wins if method1 < method2)
 #'   }
 #'
-#' @return A data frame summarizing the number of wins, ties, and losses for each method.
-#'   The returned data frame has columns:
-#'   \itemize{
-#'     \item \code{method}: Method name.
-#'     \item \code{win}: Total number of wins for this method.
-#'     \item \code{tie}: Total number of ties for this method.
-#'     \item \code{loss}: Total number of losses for this method.
-#'   }
+#' @return A `data.frame` summarizing the number of wins, ties, and losses per method.
+#' It has the following columns:
+#' \itemize{
+#'   \item `method` – the method name.
+#'   \item `win` – total number of pairwise wins.
+#'   \item `tie` – total number of pairwise ties.
+#'   \item `loss` – total number of pairwise losses.
+#' }
 #'
 #' @import dplyr
-#' @import purrr
-#' @import tibble
-#' @importFrom utils write.csv read.csv
+#' @importFrom utils read.csv write.csv
 #'
 #' @examples
 #' \dontrun{
-#' # Load example data
-#' name.file = "~/WinTieLoss/Data/random-data.csv"
-#' data = data.frame(read.csv(name.file))
-#' data = data[,-1]  # Remove first column if needed
-#' methods.names = colnames(data)
+#' #--------------------------------------------------------------
+#' # Example: Compute Win–Tie–Loss from random data
+#' #--------------------------------------------------------------
 #'
-#' # Load metric types
-#' df_res.mes <- wtl.measures()
-#' filtered_res.mes <- dplyr::filter(df_res.mes, names == "clp")
-#' measure.type = as.numeric(filtered_res.mes$type)
-#' 
-#' # Compute Win-Tie-Loss summary
-#' res = win.tie.loss.compute(data = data, measure.type = measure.type)
-#' res$method <- factor(res$method, levels = methods.names)
-#' res <- res[order(res$method), ]
-#' 
-#' # Save results to CSV
-#' FolderResults <- "~/WinTieLoss/Results"
-#' save = paste(FolderResults, "/clp.csv", sep = "")
-#' write.csv(res, save, row.names = FALSE)
+#' # 1. Load example dataset
+#' data_path <- "~/WinTieLoss/Data/random-data.csv"
+#' data <- data.frame(read.csv(data_path))
+#' data <- data[, -1]  # Remove first column (dataset names)
 #'
-#' # Plot results (optional)
-#' wtl = c("win", "tie", "loss")
-#' colnames(res) = wtl 
-#' save = paste(FolderResults, "/clp.pdf", sep = "")
-#' win.tie.loss.plot(
-#'   data = res, 
-#'   names.methods = methods.names, 
-#'   name.file = save, 
-#'   width = 18, height = 10, 
-#'   bottom = 2, left = 11, top = 0, right = 1, 
-#'   size.font = 2.0, wtl = wtl
-#' )
+#' # 2. Define measure type
+#' # Suppose lower is better (e.g., clp)
+#' measure.type <- 0
+#'
+#' # 3. Compute Win–Tie–Loss summary
+#' results <- win.tie.loss.compute(data = data, measure.type = measure.type)
+#'
+#' # 4. Sort by method
+#' methods.names <- colnames(data)
+#' results$method <- factor(results$method, levels = methods.names)
+#' results <- results[order(results$method), ]
+#'
+#' # 5. Print results
+#' print(results)
+#'
+#' # 6. Save to CSV
+#' output_path <- "~/WinTieLoss/Results/wtl-summary.csv"
+#' write.csv(results, output_path, row.names = FALSE)
 #' }
 #'
 #' @export
@@ -190,7 +229,7 @@ win.tie.loss.compute <- function(data, measure.type) {
   
   # Filter out rows where the methods are the same
   final.certo <- data.frame(
-    filter(final, !(final$name.method.1 == final$name.method.2))
+    dplyr::filter(final, !(final$name.method.1 == final$name.method.2))
   )
   
   # Calculate win, tie, and loss based on measure type

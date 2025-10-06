@@ -7,7 +7,7 @@
 compare.results(method1, method2, names, type)
 }
 \arguments{
-\item{method1}{A data frame containing performance metrics for the first method. 
+\item{method1}{A data frame containing performance metrics for the first method.
 Must include columns for wins, ties, and losses.}
 
 \item{method2}{A data frame containing performance metrics for the second method.
@@ -16,15 +16,15 @@ Must include columns for wins, ties, and losses.}
 \item{names}{A character vector of length 2, providing the names of the two methods
 being compared.}
 
-\item{type}{A character string specifying the type of comparison. 
+\item{type}{A character string specifying the type of comparison.
 Acceptable values are "wins", "ties", or "losses".}
 }
 \value{
 A data frame with the following columns:
 \item{Method}{The names of the two methods being compared.}
 \item{Total}{The total count of wins, ties, or losses for each method, depending on the comparison type.}
-\item{Best}{A character string indicating which method performed better. 
-            Values can be "Yes", "No", or "Tie".}
+\item{Best}{A character string indicating which method performed better.
+Values can be "Yes", "No", or "Tie".}
 }
 \description{
 This function compares the results of two methods based on their performance metrics,

@@ -7,14 +7,50 @@
 random.dataframe()
 }
 \value{
-A data frame with random values.
+A \code{data.frame} containing the generated random values, with:
+\itemize{
+\item \code{datasets} – dataset names (dataset1, dataset2, …)
+\item \code{method1}, \code{method2}, … – random numeric values for each method
+}
 }
 \description{
-This function generates a random data frame with a predefined number of rows 
-and columns, simulating different methods and datasets. The resulting data 
-frame is saved as a CSV file.
+This function generates a random data frame with a predefined number of rows
+and columns, simulating the results of different methods across multiple datasets.
+The generated data can be used for testing or demonstrating the Win–Tie–Loss
+computation and plotting functions.
+}
+\details{
+The function creates:
+\itemize{
+\item 20 datasets (rows)
+\item 5 methods (columns)
+}
+
+Each cell contains a random value uniformly distributed between 0 and 1.
+The resulting data frame is also saved as a CSV file in the directory
+\verb{~/WinTieLoss/Data/random-data.csv}.
+
+This function is mainly designed for internal testing and examples within the
+WinTieLoss package.
 }
 \examples{
-rdf <- random.dataframe()
-rdf
+\dontrun{
+#--------------------------------------------------------------
+# Example: Generate random example data for testing
+#--------------------------------------------------------------
+
+# Generate and save random dataset
+df <- random.dataframe()
+
+# Display the first few rows
+head(df)
+
+# Path to saved file
+"~/WinTieLoss/Data/random-data.csv"
+
+# You can then use this file with:
+#   win.tie.loss.compute()
+#   win.tie.loss.plot()
+}
+
 }

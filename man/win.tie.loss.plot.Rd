@@ -20,17 +20,17 @@ win.tie.loss.plot(
 )
 }
 \arguments{
-\item{data}{A data frame containing the win-tie-loss summary, where each row 
-corresponds to a method, and each column corresponds to the counts of wins, 
+\item{data}{A data frame containing the win-tie-loss summary, where each row
+corresponds to a method, and each column corresponds to the counts of wins,
 ties, and losses.}
 
-\item{names.methods}{A character vector of method names to be displayed along 
+\item{names.methods}{A character vector of method names to be displayed along
 the y-axis of the plot.}
 
-\item{name.file}{The name (including full path) of the output PDF file 
+\item{name.file}{The name (including full path) of the output PDF file
 where the plot will be saved.}
 
-\item{max.value}{A numeric value indicating the maximum limit for the x-axis. 
+\item{max.value}{A numeric value indicating the maximum limit for the x-axis.
 This should correspond to the highest win-tie-loss value for proper scaling.}
 
 \item{width}{The width of the output PDF in inches.}
@@ -47,18 +47,18 @@ This should correspond to the highest win-tie-loss value for proper scaling.}
 
 \item{size.font}{Font size for labels, method names, and axis text.}
 
-\item{wtl}{A character vector indicating the labels for the respective 
+\item{wtl}{A character vector indicating the labels for the respective
 categories: wins, ties, and losses. Default is \code{c("win", "tie", "loss")}.}
 }
 \value{
-Invisibly returns the input data (for consistency), and saves 
-a PDF file containing the Win-Tie-Loss barplot at the specified location. 
+Invisibly returns the input data (for consistency), and saves
+a PDF file containing the Win-Tie-Loss barplot at the specified location.
 The plot includes a legend and reference lines for interpretation.
 }
 \description{
-This function generates a barplot visualizing the Win-Tie-Loss summary 
-for different methods. The resulting plot provides a clear graphical 
-representation of each method’s performance in terms of wins, ties, 
+This function generates a barplot visualizing the Win-Tie-Loss summary
+for different methods. The resulting plot provides a clear graphical
+representation of each method’s performance in terms of wins, ties,
 and losses. The plot is automatically saved as a PDF file.
 }
 \examples{
