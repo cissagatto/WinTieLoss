@@ -127,14 +127,14 @@ wtl.measures <- function() {
              "hamming_loss",
              
              "macro_auc",
-             "macro_F1",
+             "macro_f1",
              "macro_precision",
              "macro_recall",
              
              "margin_loss",
              
              "micro_auc",
-             "micro_F1",
+             "micro_f1",
              "micro_precision",
              "micro_recall",
              
